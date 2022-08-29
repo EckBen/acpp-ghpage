@@ -1,0 +1,477 @@
+<!DOCTYPE html><html>
+<head>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+<script src="http://code.highcharts.com/highcharts.js"></script>
+	
+<script src="http://code.highcharts.com/highcharts-more.js"></script>
+	
+<script src="http://code.highcharts.com/modules/exporting.js"></script>
+
+<script 
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDULxnPc6zGc6068m7K73rJkM_4EBVs3MQ">
+</script>
+
+<!--<script src="https://maps.googleapis.com/maps/api/elevation/"></script>-->
+
+<script>
+$(document.getElementsByTagName('#output_div_chart')[0]).ready(function() {
+   	// do stuff when div is ready
+   		initializePage();
+ 	});	
+
+</script>
+
+<link rel="stylesheet" href="css/table_styles.css">
+
+</head>
+
+<body>
+
+<div style="display:inline;">
+
+<div id="output_div_chart" style="width:65%; float:left;"  >
+</div>
+
+<div id = "stn info" style = "width:25%; float:left; ;padding-left:2%;">
+	<span id="province"></span><br>
+	<span id="location"></span><br>
+	<span id="point_lat"></span><br>
+	<span id="point_lon"></span><br>
+	<span id="elevation"></span><br>
+	<span id="period_record"></span><br>
+	<span id = "data_source"></span><br>
+</div>
+
+</div>
+
+<div style = "clear:left;"></div>
+<div id="output_div_table" style = "padding-top:5%; clear:left;">
+</div>
+
+
+<script>
+
+console.log('precip graph page');	
+var IDF_lines = ['2-yr','5-yr','10-yr','25-yr','50-yr','100-yr'];
+var table_vals = {};
+
+function initializePage() {
+					console.log('IN INEACHFEATURE');			
+				    var lat_var = localStorage.getItem('passed_lat_val');
+				    var lon_var = localStorage.getItem('passed_lon_val');
+				    var stn_var = localStorage.getItem('passed_stn');
+				    var option1_var = localStorage.getItem('passed_option1');
+				    var option2_var = localStorage.getItem('passed_option2');
+				    var option3_var = localStorage.getItem('passed_option3');
+				    var option4_var = localStorage.getItem('passed_option4');
+				    var id_var = localStorage.getItem('passed_stn_id');
+  				    var rec_leng_var = localStorage.getItem('passed_rec_leng');
+  				    var rec_per_var = localStorage.getItem('passed_rec_per');
+  				    var stn_elev = localStorage.getItem('passed_elev');
+
+					if (stn_var == "Click Marker to Select") {
+						document.querySelector('#data_source').innerHTML = 'Data represent point estimates calculated from annual maximum series.';
+						var elevator = new google.maps.ElevationService;
+							locations = [];
+							locations.push(new google.maps.LatLng(parseFloat(lat_var), parseFloat(lon_var)));
+					
+							elevator.getElevationForLocations({'locations': locations},function(results, status) {
+					 			document.querySelector('#elevation').innerHTML = 'Elevation:    '.bold() + results[0]['elevation'].toFixed(0) + ' m';
+								 });
+					} else {
+						document.querySelector('#data_source').innerHTML = 'Data represent station values calculated from annual maximum series.'
+						document.querySelector('#elevation').innerHTML = 'Elevation:    '.bold() + stn_elev + ' m';	
+						document.querySelector('#location').innerHTML = 'Location:    '.bold() + stn_var;
+						
+						if (parseFloat(rec_leng_var)>=30){
+							document.querySelector('#period_record').innerHTML = 'Period of Record:    '.bold() + rec_leng_var + ' years ' + rec_per_var;
+						} else {
+								document.querySelector('#period_record').innerHTML = 'Period of Record:    '.bold() + rec_leng_var + ' years ' + rec_per_var + '<br>   CAUTION: SHORT STATION RECORD'.fontcolor("red");
+						};		
+					};
+						
+					//document.querySelector('#smoothing').innerHTML = 'Smoothing: ' + option1_var ;
+					
+					var latlng = {lat: parseFloat(lat_var), lng: parseFloat(lon_var)};
+					var geocoder = new google.maps.Geocoder;
+					
+					
+					console.log(parseFloat(lat_var));
+					geocoder.geocode({'location': latlng}, function(results, status) {
+						var array_length = results.length;
+						
+						if (array_length>2){
+							// bnb2 20201202
+							//var address = (results[parseFloat(array_length)-2].formatted_address).split(',');
+							var address = (results[parseFloat(array_length)-4].formatted_address).split(',');
+							console.log(address[1])
+						}else{
+							console.log(results[0]);
+							console.log(results[1]);
+						};
+							
+						console.log(status);
+						console.log(address);
+					
+						if (address){
+							if (address[1] == ' Canada') {	
+								// bnb2 20201202
+								//document.querySelector('#province').innerHTML = 'Province: '.bold() + address[0] ;
+								document.querySelector('#province').innerHTML = 'Province: '.bold() + address[address.length-2] ;
+							}else{
+								// bnb2 20201202
+								//document.querySelector('#province').innerHTML = 'State: '.bold() + address[0] ;
+								document.querySelector('#province').innerHTML = 'State: '.bold() + address[address.length-2] ;
+							};	
+							// bnb2 20201202
+							//var province_name = address[0];
+							var province_name = address[address.length-2];
+						} else {
+							var province_name = "undefined";
+						};	
+						
+						
+						if (stn_var == "Click Marker to Select" & province_name !="undefined") {
+							if (array_length==2){
+								document.querySelector('#location').innerHTML = 'Location: Unresolved location in ' + address[0] + address[1];
+								console.log('equal 2');
+								console.log(address)
+							} else if (array_length>2){
+								console.log('greater 2');
+								console.log(results[1])
+								document.querySelector('#location').innerHTML = 'Location:  '.bold() + results[1].formatted_address;
+							} else {
+								document.querySelector('#location').innerHTML = 'Location: Unresolved';
+							};
+						};		
+					
+					if (parseFloat(lat_var)>=0) {
+						document.querySelector('#point_lat').innerHTML = 'Latitude:   '.bold() + parseFloat(lat_var).toFixed(2) + ' N';
+					} else{
+						document.querySelector('#point_lat').innerHTML = 'Latitude:   '.bold() + parseFloat(lat_var).toFixed(2) + ' S';
+					};	
+					
+					if (parseFloat(lon_var)>=0) {
+						document.querySelector('#point_lon').innerHTML = 'Longitude:  '.bold() + parseFloat(lon_var).toFixed(2) + ' E';
+					}else{
+						document.querySelector('#point_lon').innerHTML = 'Longitude:  '.bold() + Math.abs(parseFloat(lon_var).toFixed(2)) + ' W';
+					};	
+						
+					// bnb2 20201202
+					//if (province_name=='Maine' || province_name=='New Brunswick' || province_name=='Nova Scotia'|| province_name=='Prince Edward Island' || province_name=='Newfoundland and Labrador') {
+					if (province_name.indexOf('Maine')!=-1 || province_name.indexOf('New Brunswick')!=-1 || province_name.indexOf('Nova Scotia')!=-1|| province_name.indexOf('Prince Edward Island')!=-1 || province_name.indexOf('Newfoundland and Labrador')!=-1 || province_name.indexOf('ME')!=-1 || province_name.indexOf('NB')!=-1 || province_name.indexOf('NS')!=-1|| province_name.indexOf('PE')!=-1 || province_name.indexOf('NL')!=-1) {
+						if ((parseFloat(lat_var)>=42.00 & parseFloat(lat_var)<52.00 & parseFloat(lon_var) >+ -69.425 & parseFloat(lon_var) < -52.00) || stn_var != 'Click Marker to Select'){
+        					get_data(id_var,stn_var,lat_var,lon_var);
+        				} else {
+        					$('#output_div_chart').empty();
+ 						$('#output_div_chart').append('<h2 style="color:red;">Extreme Precipitation Estimates are not available at points located more than 100 km from an observing station. <br> Please select a different point.</h2>');
+ 						};
+        			} else if (province_name=='undefined' || parseFloat(lat_var)<42.00 || parseFloat(lat_var)>=52.00 || parseFloat(lon_var) < -69.425 || parseFloat(lon_var) > -52.00){ 
+        				$('#output_div_chart').empty();
+ 						$('#output_div_chart').append('<h2 style="color:red;">Extreme Precipitation Estimates are not available at points located more than 100 km from an observing station. <br> Please select a different point.</h2>');
+ 					} else {
+ 						$('#output_div_chart').empty();
+ 						$('#output_div_chart').append('<h2 style="color:red;">Data not available for Provinces outside of Atlantic Canada</h2>');
+ 					};	
+ 					
+ 				  });	
+        					
+				}
+				
+
+function get_data(id_var,stn_var,lat_var,lon_var) {
+		
+		if (stn_var != 'Click Marker to Select') {
+			var infile = './stnData/' + id_var + '.json';
+
+		 	console.log ('BEFORE GET', infile);
+			$.get(infile, function (results) {
+ 			//table_vals=results[clicked_scenario][clicked_time_per][clicked_return];
+			  //var table_vals = {};
+			  console.log ('IN GET');
+			  console.log(results);         //[key_lon]['10-yr'][1]
+			  console.log("results");
+		
+		
+			   if (results['2-yr'][0][0]>=0) {
+                    generate_IDFGraph(results);   //Need to add [key_lon] to these for grid files
+			 		generate_IDFtable(results);  //Need to add [key_lon] to these for grid files
+        		} else { 
+        			$('#output_div_chart').empty();
+ 					$('#output_div_chart').append('<h2 style="color:red;">Extreme Precipitation Estimates are not available at points located more than 100 km from an observing station. <br> Please select a different point.</h2>');
+ 				};
+		
+		});
+
+		} else {	
+			console.log(lat_var,lon_var,'Coordinates');
+			var lat_str = lat_var.toString()
+			var lat_decimal = lat_str.indexOf('.');
+			if (lat_decimal == -1) {
+				lat_str = lat_str + '.0';
+				lat_decimal = lat_str.indexOf('.');
+			};
+			var lat_start = lat_str.substring(0,lat_decimal+2)
+			var lat_extra = parseFloat(lat_str.substring(0,lat_decimal+2));
+			var lat_end = lat_var-lat_extra;
+			
+			var lon_str = lon_var.toString()
+			var lon_decimal = lon_str.indexOf('.');
+			
+			if (lon_decimal == -1) {
+				lon_str = lon_str + '.0';
+				lon_decimal = lon_str.indexOf('.');
+			};
+				
+			var lon_start = lon_str.substring(0,lon_decimal+2)
+			var lon_extra = parseFloat(lon_str.substring(0,lon_decimal+2));
+			var lon_end = lon_extra-lon_var;   ///order switched for negative lons
+			
+			console.log(lon_str,lon_decimal,lon_start,lon_end);
+			
+			if (lon_end >=0 & lon_end <0.05){
+				var key_lon = lon_start + '25';
+			} else if (lon_end >=0.05){
+				var key_lon = lon_start + '75';
+			};	
+			
+			if (lat_end >=0 & lat_end <0.05){
+				var file_lat = lat_start  + '25';       //var file_lat = lat_start + '25';  Test file is just 46 degrees latitude
+			} else if (lat_end >=0.05){
+				var file_lat = lat_start + '75';       //var file_lat = lat_start + '75';  Test file is just 46 degrees latitude
+			};
+			
+			
+			
+			console.log(file_lat,key_lon);
+			
+			
+			
+			var infile = './gridData/'+ file_lat + '.json';
+			
+			//var infile = './stnData/CA00705C2G9.json';   //Just a holder for now
+		
+		
+		 	console.log ('BEFORE GET', infile);
+			$.get(infile, function (results) {
+ 			//table_vals=results[clicked_scenario][clicked_time_per][clicked_return];
+			  //var table_vals = {};
+			  console.log ('IN GET');
+			  console.log(key_lon);
+			  console.log(results[key_lon]);         //[key_lon]['10-yr'][1]
+			  console.log("results");
+		
+			  if (results[key_lon]['2-yr'][0][0]>=0) {
+        		generate_IDFGraph(results[key_lon]);   //Need to add [key_lon] to these for grid files
+			 	generate_IDFtable(results[key_lon]);  //Need to add [key_lon] to these for grid files
+        		} else { 
+        		$('#output_div_chart').empty();
+ 				$('#output_div_chart').append('<h2 style="color:red;">Extreme Precipitation Estimates are not available at points located more than 100 km from an observing station. <br> Please select a different point.</h2>');
+ 				};
+		
+		});
+		
+		};
+		}
+function generate_IDFGraph(results) {
+	
+	var durations = [5./60.,10./60.,0.25,0.5,1.,2.,6.,12.,24.];
+	var label_show = ['5 min', '10 min', '15 min','30 min', '1 hr','2 hr','6 hr','12 hr','24 hr'];
+	var seriesin = [];
+	var point_colors=['red','blue','green','orange','cyan','purple'];
+	var IDF_refvals = [5/60.,6/60.,7/60.,8/60.,9/60.,10/60.,15/60.,20/60.,30/60.,40/60.,50/60.,1.,2.,3.,4.,5.,6.,7.,8.,9.,10.,12.,14.,16.,20.,24.]
+		
+		
+		for (i = 0; i < IDF_lines.length; i += 1) {
+			var data=[];
+			var data_point = [];
+		
+			table_vals[IDF_lines[i]]=results[IDF_lines[i]][0];
+			
+			  //for (d = 1/60.; d < 25; d += 1/60.) {
+				for (d = 0; d < durations.length; d += 1) {		
+				console.log(d,Math.log(d));
+				plot_valu = Math.exp(table_vals[IDF_lines[i]][d])*(durations[d]);
+				plot_point = Math.exp(table_vals[IDF_lines[i]][d])*(durations[d]);
+				console.log(table_vals[IDF_lines[i]][d],durations[d]);
+			
+					
+				data.push([Math.log(durations[d]),plot_valu]);	
+				data_point.push([Math.log(durations[d]),plot_point]);
+			};
+			
+			seriesin.push({name:IDF_lines[i],data:data,color:'black',lineWidth: 1.5, zIndex:3, showInLegend: false, marker: {
+            enabled: false},});
+			
+                
+            seriesin.push({name:IDF_lines[i],data:data_point,color:point_colors[i],lineWidth: 0, zIndex:4,marker: {
+            enabled: true,radius:3},});
+			
+		};
+		
+		
+		var chart=$('#output_div_chart').highcharts({
+			
+			chart: {
+				borderWidth: 2,
+            			events: {
+                			load: function(event) {               
+					 this.renderer.image('img/acis.jpg',850,280,100,35)
+					.attr({zIndex:10}) 
+					.add();
+                			},
+            			zIndex:20,}        
+			      },
+				
+				
+			credits: {
+            	 text: 'Northeast Regional Climate Center - Cornell University',
+           		 href: 'http://www.nrcc.cornell.edu',
+           		 
+           		 position: {align:'left', x:3
+           		 			},
+           		 style: { color:'red',fontSize:'11px',
+           		 		},
+        	},
+        	
+			title: {
+            text: 'Precipitation Amount Duration Frequency Curves:  ' +
+            	'</b><br/><span style="visibility: hidden;">-</span><br/>' 
+			},
+			
+			yAxis: {
+            	title: {
+                	text: 'Precipitation Amount (mm)',
+                },
+                type: 'logarithmic',
+                lineWidth:1,
+                tickInterval: 0.25,
+                gridLineWidth:1,
+                gridLineDashStyle:"Dot"
+             }, 
+             
+            xAxis: {
+            	title: {
+            		enabled: true,
+            		align:'middle',
+                	text: 'Duration',
+                	useHTML: true
+                },
+                
+       
+               // type: 'logarithmic',
+                tickPositions:IDF_refvals.map(Math.log),
+               labels:{
+            		formatter: function() {
+                		;
+                			if (this.value < 0){
+                    				var label_text = (Math.exp(this.value)*60.).toFixed(0)+' min'; 
+               			    }else if (this.value==0) {
+                    				var label_text = '1 hr';
+                			} else {
+                					var label_text = (Math.exp(this.value)).toFixed(0)+' hr';                      
+            				}
+            				
+            				if (label_show.indexOf(label_text)>-1){
+            					return label_text
+            				}
+            		 },  
+            		 rotation: 270
+            	
+       		   },
+               
+                gridLineWidth:1,
+                gridLineDashStyle:"Dot",
+               // minorTickInterval:1,
+                minorGridLineWidth:1,
+                minorGridLineDashStyle:"Dot"
+                
+             }, 
+             
+             legend: {
+             	enabled:true,
+             	align: 'left',
+             	verticalAlign: 'top',
+            	layout: 'vertical',
+            	y: 50,
+            	x:75,
+            	floating:true,
+            	itemWidth:250,
+            	title:{
+            		text:'Recurrence Interval',
+            	},
+            },
+             
+             
+            tooltip: {
+				shared: true,
+				useHTML: true,
+				
+    			formatter: function() {
+					var text = '';
+						if (this.x < 0){
+                    		text = '<b>' + (Math.exp(this.x)*60.).toFixed(0) + ' min Duration Rainfall Amounts by Recurrence Interval</b><br> <br>'; 
+               			 }else if (this.x==0) {
+                    				text = '<b>1 hr Duration Rainfall Amounts by Recurrence Interval</b> <br><br>';
+                			} else {
+                					text = '<b>' + (Math.exp(this.x)).toFixed(0) + ' hr Duration Rainfall Amounts by Recurrence Interval</b><br> <br>';
+							}
+ 	          		text =  text +
+ 	          				'2-year: '+ Highcharts.numberFormat(this.points[1].y, 1) + ' mm <br>' +
+ 	                  		'5-year: '+ Highcharts.numberFormat(this.points[3].y, 1) + ' mm <br>' +
+ 	                  		'10-year: '+ Highcharts.numberFormat(this.points[5].y, 1) + ' mm <br>' +
+ 	                  		'25-year: '+ Highcharts.numberFormat(this.points[7].y, 1) + ' mm <br>' +
+ 	                  		'50-year: '+ Highcharts.numberFormat(this.points[9].y, 1) + ' mm <br>' +
+ 	                  		'100-year: '+ Highcharts.numberFormat(this.points[11].y, 1) + ' mm <br>';
+        			return text;
+   				 }
+			},
+   		
+			series:seriesin
+			});	
+			
+	}
+
+
+function generate_IDFtable(results) {
+		
+		var durations = [5./60.,10./60.,0.25,0.5,1.,2.,6.,12.,24.];
+			
+ 			$('#output_div_table').empty();
+ 			$('#output_div_table').append('<table class=pfd_table id=table_pfd><\/table>');
+ 			$('#table_pfd').append('<thead><\/thead><tbody><\/tbody>');
+ 			$('#table_pfd thead').append('<tr> <th><\/th> <th>2-year<\/th> ' +
+				'<th>5-year <\/th><th>10-year<\/th><th>25-year<\/th>' +
+				'<th>50-year <\/th><th>100-year<\/th></tr>');
+			$('#table_pfd thead').append('<tr><th>Duration<\/th> ' +
+				'<th>Observed Amount<\/th> <th>Observed Amount<\/th>' +
+				'<th>Observed Amount<\/th> <th>Observed Amount<\/th>' +
+				'<th>Observed Amount<\/th> <th>Observed Amount<\/th><\/tr>');
+			$('#table_pfd thead').append('<tr> <th>(hours)<\/th> ' +
+				'<th>(mm)<\/th> <th>(mm)<\/th><th>(mm)<\/th> <th>(mm)<\/th><th>(mm)<\/th><th>(mm)<\/th><\/tr>');
+			
+  	//		for (d = 0; d < durations.length; d += 1) {
+ 			var cnt = 0;
+ 			
+ 			for (d = 0; d < durations.length; d += 1){
+ 				if (durations[d]>1 && (parseFloat((durations[d]%1).toFixed(2))!=0 && parseFloat((durations[d]%1).toFixed(2))!=0.25 && parseFloat((durations[d]%1).toFixed(2))!=0.5 && parseFloat((durations[d]%1).toFixed(2))!=0.75 && parseFloat((durations[d]%1).toFixed(2))!=1)) { continue; };
+ 				
+ 				tbody = '<th>' + durations[d].toFixed(2) + '</th>' ;
+ 				for (i = 0; i < IDF_lines.length; i += 1) {
+ 		
+ 					table_entry = Math.exp(table_vals[IDF_lines[i]][d])*(durations[d]);
+ 					tbody = tbody + '<td>' + table_entry.toFixed(1) + '</td>';
+ 				};
+ 				
+ 				$('#table_pfd:last tbody').append('<tr>' + tbody + '<\/tr>');
+ 			};	
+ 			
+ 		
+	} 	
+</script>
+</body>
+</html>
+

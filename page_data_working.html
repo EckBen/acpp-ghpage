@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=iso-8859-1" />
+<title>Data &amp; Products :: Extreme Precipitation in a Changing Climate</title>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=ABQIAAAAZaisO1PdRVvEo8dVXTteYRTqOUR98QD6vjL0Sb-vIlgVfNJyWhTs9OSlTyz-hBtuB2p1VR3SGqyAXg" type="text/javascript"></script>
+
+<!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDULxnPc6zGc6068m7K73rJkM_4EBVs3MQ&callback=initMap" async defer></script>-->
+
+<script type="text/javascript" src="js/common.js"></script>
+<script type="text/javascript" src="js/map.js"></script>
+<script type="text/javascript" src="js/data_nav.js"></script>
+<script type="text/javascript" src="js/data.js"></script>
+<script type="text/javascript" src="js/counties.js"></script>
+<script type="text/javascript" src="js/info_box.js"></script>
+
+<script>
+$(document).ready(function() {
+
+       var help_file_name;
+
+       $('.help_master').on("mouseenter", function () {
+               help_file_name = 'help/'+this.id+'.html';
+                $("#info_blurb").show();
+               console.log(help_file_name);
+	       $('#info_blurb').load(help_file_name);
+       });
+
+});
+ 
+</script> 
+
+<link rel="stylesheet" href="css/data.css" media="all"/>
+
+</head>
+
+<? include('data_check.php') ?>
+
+<body>
+<table>
+<tr><th>Select Product<img src="img/question_aaccff.png" class="help_master" alt="Click the Question Mark for additional help and information." id="product"/></th></tr>
+<tr><td id="product_html"><a href="javascript:changeProduct('html');">Extreme Precipitation Tables - HTML</a><img src="img/question_aaccff.png" class="help_master" alt="Click the Question Mark for additional help and information." id="product_html"/></td></tr>
+<tr><td id="product_text"><a href="javascript:changeProduct('text');">Extreme Precipitation Tables - Text/CSV</a><img src="img/question_aaccff.png" class="help" alt="Click the Question Mark for additional help and information." id="help_product_text"/></td></tr>
+<tr><td id="product_pds"><a href="javascript:changeProduct('pds');">Partial Duration Series - by Point</a><img src="img/question_aaccff.png" class="help" alt="Click the Question Mark for additional help and information." id="help_product_pds"/></td></tr>
+<tr><td id="product_pdsstn"><a href="javascript:changeProduct('pdsstn');">Partial Duration Series - by Station</a><img src="img/question_aaccff.png" class="help" alt="Click the Question Mark for additional help and information." id="help_product_pdsstn"/></td></tr>
+<tr><td id="product_dist"><a href="javascript:changeProduct('dist');">Distribution Curves - Graphical</a><img src="img/question_aaccff.png" class="help" alt="Click the Question Mark for additional help and information." id="help_product_dist"/></td></tr>
+<tr><td id="product_disttext"><a href="javascript:changeProduct('disttext');">Distribution Curves - Text/TBL</a><img src="img/question_aaccff.png" class="help" alt="Click the Question Mark for additional help and information." id="help_product_disttext"/></td></tr>
+<tr><td id="product_ifd"><a href="javascript:changeProduct('ifd');">Intensity Frequency Duration Graphs</a><img src="img/question_aaccff.png" class="help" alt="Click the Question Mark for additional help and information." id="help_product_idf"/></td></tr>
+<tr><td id="product_pfd"><a href="javascript:changeProduct('pfd');">Precipitation Frequency Duration Graphs</a><img src="img/question_aaccff.png" class="help" alt="Click the Question Mark for additional help and information." id="help_product_pdf"/></td></tr>
+<tr><td id="product_gis"><a href="javascript:changeProduct('gis');">GIS Data Files</a><img src="img/question_aaccff.png" class="help" alt="Click the Question Mark for additional help and information." id="help_product_gis"/></td></tr>
+<tr><td id="product_maps"><a href="javascript:changeProduct('maps');">Regional/State Maps</a><img src="img/question_aaccff.png" class="help" alt="Click the Question Mark for additional help and information." id="help_product_maps"/></td></tr>
+</table>
+
+<form id="data" name="data" action="#" style="margin:0; padding:0;">
+<input type="hidden" name="p" value=""/>
+<input type="hidden" name="n" value=""/>
+<input type="hidden" name="w" value=""/>
+<input type="hidden" name="o1" value=""/>
+<input type="hidden" name="o2" value=""/>
+<input type="hidden" name="o3" value=""/>
+<input type="hidden" name="o4" value=""/>
+<input type="hidden" name="d" value=""/>
+</form>
+
+<div id="product">&nbsp;</div>
+
+<div id="map_title">Select Location<img src="img/question_eeeeee.png" class="help" alt="Click the Question Mark for additional help and information." id="help_location"/> <span>Double-click the map to place a marker, or enter address or latitude/longitude.</span></div>
+
+<div id="map"></div>
+
+<div id="location_address">
+<div class="box_title">
+&nbsp;Locate by Address<img src="img/question_ffffcc.png" class="help" alt="Click the Question Mark for additional help and information." id="help_location_address"/>
+</div>
+<div class="box_text">
+<form name="locator_address" action="#" onsubmit="submitAddress(); return false;">
+<input type="text" name="address" id="address" size="16"/>&nbsp;
+<input type="submit" value="&rarr;"/>
+</form>
+</div>
+</div>
+
+<div id="location_latlon">
+<div class="box_title">
+&nbsp;Locate by Lat/Lon<img src="img/question_ffffcc.png" class="help" alt="Click the Question Mark for additional help and information." id="help_location_latlon"/>
+</div>
+<div class="box_text">
+<form name="locator_latlon" action="#" onsubmit="submitLatlon(); return false;">
+<input type="text" name="latitude" id="latitude" size="4"/>&deg;N&nbsp;
+<input type="text" name="longitude" id="longitude" size="4"/>&deg;W&nbsp;
+<input type="submit" value="&rarr;"/>
+</form>
+</div>
+</div>
+
+<div id="location_county">
+<div class="box_title">
+&nbsp;Locate by State/County<img src="img/question_ffffcc.png" class="help" alt="Click the Question Mark for additional help and information." id="help_location_county"/>
+</div>
+<div class="box_text">
+<form name="locator_county" action="#" onsubmit="submitCounty(); return false;">
+<span id="states_and_counties">&nbsp;</span>
+</form>
+</div>
+</div>
+
+v id="options_title">Select Options<img src="img/question_eeeeee.png" class="help" alt="Click the Question Mark for additional help and information." id="help_options"/></div>
+<div class="options_box">
+
+<div id="option1_box" class="option_2-1">
+<div class="box_title">Smoothing<img src="img/question_ffffcc.png" class="help" alt="Click the Question Mark for additional help and information." id="help_option_smoothing"/></div>
+<div class="box_text">
+<select id="option1" name="option1">
+<option value="yes">Yes</option>
+<option value="no">No</option>
+</select>
+</div>
+</div>
+
+<div id="option2_box" class="option_2-2">
+<div class="box_title">Delivery<img src="img/question_ffffcc.png" class="help" alt="Click the Question Mark for additional help and information." id="help_option_delivery"/></div>
+<div class="box_text">
+<select id="delivery" name="delivery">
+<option value="popup">Popup</option>
+<option value="download">Download</option>
+</select>
+</div>
+</div>
+
+<input type="hidden" id="option2" name="option2" value="X"/>
+<input type="hidden" id="option3" name="option3" value="X"/>
+<input type="hidden" id="option4" name="option4" value="X"/>
+
+</div>
+
+<div id="submit">
+<span>
+<input id="submit_button" onclick="dataSubmit();" type="submit" value="Submit"/>
+<img src="img/question_eeeeee.png" class="help" alt="Click the Question Mark for additional help and information." id="help_submit"/>
+</span>
+</div>
+
+<!--
+<iframe name="download" id="download" src="about:blank"></iframe>
+THIS IS WHERE THE MAP ETC GOES -->
+<!--<div id="info_blurb">
+	<p> blank blank blank></p>
+</div>-->
+
+</body>
+</html>

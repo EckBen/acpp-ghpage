@@ -1,0 +1,132 @@
+<div id="map_title">Select Location<img src="img/question_eeeeee.png" class="help_master" alt="Click the Question Mark for additional help and information." id="location"/> <span>Click on a station marker to select station</span></div>
+
+<div id="map_title_grid">Select Location<img src="img/question_eeeeee.png" class="help_master" alt="Click the Question Mark for additional help and information." id="location_grid"/> <span>Double-click the map to place a marker, or enter address or latitude/longitude.</span></div>
+
+
+<div id="map"></div>
+
+<div id="show_stns">
+<div class="box_title">
+&nbsp;Select Grid Point<img src="img/question_ffffcc.png" class="help_master" alt="Click the Question Mark for additional help and information." id="location_grid"/>
+</div>
+<div class="box_text">
+<form action="#" >
+Select Interpolated Grid&nbsp<input type="checkbox" name="gridCheck" id="gridCheck" onclick="markStns(this,' ')"/>&nbsp;
+</form>
+</div>
+</div>
+
+<div id="location_address">
+<div class="box_title">
+&nbsp;Locate by Address<img src="img/question_ffffcc.png" class="help_master" alt="Click the Question Mark for additional help and information." id="location_address"/>
+</div>
+<div class="box_text">
+<form name="locator_address" action="#" onsubmit="submitAddress(); return false;">
+<input type="text" name="address" id="address" size="16"/>&nbsp;
+<input type="submit" value="&rarr;"/>
+</form>
+</div>
+</div>
+
+<div id="location_latlon">
+<div class="box_title">
+&nbsp;Locate by Lat/Lon<img src="img/question_ffffcc.png" class=" help_master" alt="Click the Question Mark for additional help and information." id="location_latlon"/>
+</div>
+<div class="box_text">
+<form name="locator_latlon" action="#" onsubmit="submitLatlon(); return false;">
+<input type="text" name="latitude" id="latitude" size="4"/>&deg;N&nbsp;
+<input type="text" name="longitude" id="longitude" size="4"/>&deg;W&nbsp;
+<input type="submit" value="&rarr;"/>
+</form>
+</div>
+</div>
+
+<div id="selected_stnname">
+<div class="box_title">
+&nbsp;Selected Station
+</div>
+<div class="box_text">
+<div id="stn_content"></div>
+</div>
+</div>
+
+
+<div id="location_county">
+<div class="box_title">
+&nbsp;Zoom to Province/County<img src="img/question_ffffcc.png" class="help_master" alt="Click the Question Mark for additional help and information." id="location_county"/>
+</div>
+<div class="box_text">
+<form name="locator_county" action="#" onsubmit="submitCounty(); return false;">
+<span id="states_and_counties">&nbsp;</span>
+</form>
+</div>
+</div>
+
+<!--<div id="options_title">Select Options<img src="img/question_eeeeee.png" class="help" alt="Click the Question Mark for additional help and information." id="help_options"/></div>
+<div class="options_box">
+
+<div id="option1_box" class="option_4-1">
+<div class="box_title">Duration Range<img src="img/question_ffffcc.png" class="help" alt="Click the Question Mark for additional help and information." id="help_option_durationrange"/></div>
+<div class="box_text">
+<select id="option1" name="option1" onchange="updateIntensity();">
+<option value="nminute">5min - 120min</option>
+<option value="hourly" selected="selected">1hr - 48hr</option>
+<option value="daily">1day - 10day</option>
+</select>
+</div>
+</div>
+
+<div id="option2_box" class="option_4-2">
+<div class="box_title">Intensity Units<img src="img/question_ffffcc.png" class="help" alt="Click the Question Mark for additional help and information." id="help_option_intensityunits"/></div>
+<div class="box_text">
+<select id="option2" name="option2">
+<option value="minute">inches/minute</option>
+<option value="hour" selected="selected">inches/hour</option>
+<option value="day">inches/day</option>
+</select>
+</div>
+</div>
+
+<div id="option3_box" class="option_4-3">
+<div class="box_title">Recurrence<img src="img/question_ffffcc.png" class="help" alt="Click the Question Mark for additional help and information." id="help_option_recurrence"/></div>
+<div class="box_text">
+<select id="option3" name="option3">
+<option value="1yr">1yr</option>
+<option value="2yr">2yr&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(&nbsp;50%&nbsp;)</option>
+<option value="5yr">5yr&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(&nbsp;20%&nbsp;)</option>
+<option value="10yr">10yr&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(&nbsp;10%&nbsp;)</option>
+<option value="25yr">25yr&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(&nbsp;&nbsp;&nbsp;4%&nbsp;)</option>
+<option value="50yr">50yr&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(&nbsp;&nbsp;&nbsp;2%&nbsp;)</option>
+<option value="100yr">100yr&nbsp;&nbsp;&nbsp;&nbsp;(&nbsp;&nbsp;&nbsp;1%&nbsp;)</option>
+<option value="200yr">200yr&nbsp;&nbsp;&nbsp;&nbsp;(&nbsp;&nbsp;.5%&nbsp;)</option>
+<option value="500yr">500yr&nbsp;&nbsp;&nbsp;&nbsp;(&nbsp;&nbsp;.2%&nbsp;)</option>
+</select>
+</div>
+</div>
+
+<div id="option4_box" class="option_4-4">
+<div class="box_title">Confidence Limits<img src="img/question_ffffcc.png" class="help" alt="Click the Question Mark for additional help and information." id="help_option_confidence"/></div>
+<div class="box_text">
+<select id="option4" name="option4">
+<option value="show">Show</option>
+<option value="hide" selected="selected">Hide</option>
+</select>
+</div>
+</div> 
+
+</div> -->
+
+<input type="hidden" id="option1" name="option1" value="X"/>
+<input type="hidden" id="option2" name="option2" value="X"/>
+<input type="hidden" id="option3" name="option3" value="X"/>
+<input type="hidden" id="option4" name="option4" value="X"/>
+<input type="hidden" id="delivery" name="delivery" value="popup"/>
+
+
+
+<div id="submit">
+<span>
+<input id="submit_button" onclick="dataSubmit();" type="submit" value="Submit"/>
+<img src="img/question_eeeeee.png" class="help_master" alt="Click the Question Mark for additional help and information." id="submit"/>
+</span>
+</div>

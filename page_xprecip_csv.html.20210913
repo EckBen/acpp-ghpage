@@ -1,0 +1,374 @@
+<!DOCTYPE html><html>
+<head>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+<script type="text/javascript" src="//cdn.rawgit.com/MrRio/jsPDF/master/dist/jspdf.min.js"></script> 
+<script type="text/javascript" src="//cdn.rawgit.com/niklasvh/html2canvas/0.5.0-alpha2/dist/html2canvas.min.js"></script>
+
+<script 
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDULxnPc6zGc6068m7K73rJkM_4EBVs3MQ">
+</script>
+
+
+<script>
+$(document.getElementsByTagName('#output_div')[0]).ready(function() {
+   	// do stuff when div is ready
+   		initializePage();
+ 	});	
+
+</script>
+
+
+</head>
+
+<body>
+
+<div id="output_div" style="width:50%; float:left; padding-top:2%;" >
+</div>
+
+<script>
+
+//var recurrence = ['2-yr','5-yr','10-yr','25-yr','50-yr','100-yr'];
+var csv_str = '<pre>Extreme Precipitation Tables<br>Northeast Regional Climate Center, Cornell University<br>Extreme Precipitation Estimates (mm)<br>';
+
+
+function initializePage() {
+					console.log('IN INEACHFEATURE');			
+				    var lat_var = localStorage.getItem('passed_lat_val');
+				    var lon_var = localStorage.getItem('passed_lon_val');
+				    var stn_var = localStorage.getItem('passed_stn');
+				    var option1_var = localStorage.getItem('passed_option1');
+				    var option2_var = localStorage.getItem('passed_option2');
+				    var option3_var = localStorage.getItem('passed_option3');
+				    var option4_var = localStorage.getItem('passed_option4');
+				    var id_var = localStorage.getItem('passed_stn_id');
+  				    var rec_leng_var = localStorage.getItem('passed_rec_leng');
+  				    var rec_per_var = localStorage.getItem('passed_rec_per');
+  				    var stn_elev = localStorage.getItem('passed_elev');
+  				    
+  				    var province_str = '';
+  				    var elevation_str = '';
+  				    var por_str = '';
+  				    var location_str = '';
+  				    var lat_str = '';
+  				    var lon_str = '';
+
+					if (stn_var == "Click Marker to Select") {
+					//	document.querySelector('#data_source').innerHTML = 'Data represent point estimates calculated from annual maximum series.';
+					csv_str = csv_str + 'Data represent point estimates calculated from annual maximum series.<br>';
+					por_str = '<br>'
+						var elevator = new google.maps.ElevationService;
+							locations = [];
+							locations.push(new google.maps.LatLng(parseFloat(lat_var), parseFloat(lon_var)));
+					
+							elevator.getElevationForLocations({'locations': locations},function(results, status) {
+					 //			document.querySelector('#elevation').innerHTML = 'Elevation:    '.bold() + results[0]['elevation'].toFixed(0) + ' m';
+					 			elevation_str = 'Elevation (m),' + results[0]['elevation'].toFixed(0) + '<br>'
+								 });
+					} else {
+					//	document.querySelector('#data_source').innerHTML = 'Data represent station values calculated from annual maximum series.'
+						csv_str = csv_str + 'Data represent station estimates calculated from annual maximum series.<br>';
+					//	document.querySelector('#elevation').innerHTML = 'Elevation:    '.bold() + stn_elev + ' m';	
+						elevation_str = 'Elevation (m),' + stn_elev  + '<br>';	
+					//	document.querySelector('#location').innerHTML = 'Location:    '.bold() + stn_var;
+						location_str = 'Location,' + stn_var  + '<br>';
+						if (parseFloat(rec_leng_var)>=30){
+					//		document.querySelector('#period_record').innerHTML = 'Period of Record:    '.bold() + rec_leng_var + ' years ' + rec_per_var;
+						por_str = 'Period of Record,' + rec_leng_var + ' years, ' + rec_per_var +'<br>' ;
+						} else {
+					//			document.querySelector('#period_record').innerHTML = 'Period of Record:    '.bold() + rec_leng_var + ' years ' + rec_per_var + '<br>   CAUTION: SHORT STATION RECORD'.fontcolor("red");
+						por_str = 'Period of Record,' + rec_leng_var + ' years, ' + rec_per_var +'<br>'+ 'CAUTION: SHORT STATION RECORD'.fontcolor("red")+'<br>'; 
+						};		
+					};
+						
+					//document.querySelector('#smoothing').innerHTML = 'Smoothing: ' + option1_var ;
+					
+					var latlng = {lat: parseFloat(lat_var), lng: parseFloat(lon_var)};
+					var geocoder = new google.maps.Geocoder;
+					
+					console.log(parseFloat(lat_var),'LATITUDE');
+					geocoder.geocode({'location': latlng}, function(results, status) {
+						var array_length = results.length;
+						
+						if (array_length>2){
+							// bnb2 20201202
+							//var address = (results[parseFloat(array_length)-2].formatted_address).split(',');
+							var address = (results[parseFloat(array_length)-4].formatted_address).split(',');
+							console.log(address[1]);
+						}else{
+							console.log(results[0]);
+							console.log(results[1]);
+						};
+							
+						console.log(status);
+					
+					
+					if (address){
+							if (address[1] == ' Canada') {	
+								// bnb2 20201202
+								//province_str = 'Province: '.bold() + address[0] ;
+								province_str = 'Province: '.bold() + address[address.length-2] ;
+							}else{
+								// bnb2 20201202
+								//province_str = 'State: '.bold() + address[0] ;
+								province_str = 'State: '.bold() + address[address.length-2] ;
+							};	
+							// bnb2 20201202
+							//var province_name = address[0];
+							var province_name = address[address.length-2];
+						} else {
+							var province_name = "undefined";
+						};	
+						
+						if (stn_var == "Click Marker to Select") {
+							if (array_length==2){
+								//document.querySelector('#location').innerHTML = 'Location: Unresolved location in ' + address[0] + address[1];
+								location_str = 'Location,'+'Unresolved location in,'+ address[0]+ ',' + address[1] + '<br>';
+								console.log('equal 2');
+								console.log(address);
+							} else if (array_length>2){
+								console.log('greater 2');
+								console.log(results[1]);
+								//document.querySelector('#location').innerHTML = 'Location:  '.bold() + results[1].formatted_address;
+								location_str = 'Location,'+ results[1].formatted_address + '<br>';
+							} else {
+								//document.querySelector('#location').innerHTML = 'Location: Unresolved';
+								location_str = 'Location,'+ 'Unresolved<br>';
+							};
+						};	
+						
+						console.log(province_str,'Province 2',elevation_str,location_str);	
+					
+					
+					console.log ('hello Canada',province_str,'HELLO');
+					if (parseFloat(lat_var)>=0) {
+				//		document.querySelector('#point_lat').innerHTML = 'Latitude:   '.bold() + parseFloat(lat_var).toFixed(2) + ' N';
+						console.log('HI YA ARt');
+						lat_str = 'North Latitude,' + parseFloat(lat_var).toFixed(2) + '<br>';
+					} else{
+				//		document.querySelector('#point_lat').innerHTML = 'Latitude:   '.bold() + parseFloat(lat_var).toFixed(2) + ' S';
+						lat_str = 'South Latitude,' + parseFloat(lat_var).toFixed(2) + '<br>';
+					};	
+					
+					if (parseFloat(lon_var)>=0) {
+				//		document.querySelector('#point_lon').innerHTML = 'Longitude:  '.bold() + parseFloat(lon_var).toFixed(2) + ' E';
+						lon_str = 'East Longitude,' + parseFloat(lon_var).toFixed(2) + '<br>';
+					}else{
+				//		document.querySelector('#point_lon').innerHTML = 'Longitude:  '.bold() + Math.abs(parseFloat(lon_var).toFixed(2)) + ' W';
+						lon_str = 'West Longitude,' + parseFloat(lon_var).toFixed(2) + '<br>';
+					};	
+					
+						
+					// bnb2 20201202
+					//if (province_name=='Maine' || province_name=='New Brunswick' || province_name=='Nova Scotia'|| province_name=='Prince Edward Island' || province_name=='Newfoundland and Labrador') {
+					if (province_name.indexOf('Maine')!=-1 || province_name.indexOf('New Brunswick')!=-1 || province_name.indexOf('Nova Scotia')!=-1|| province_name.indexOf('Prince Edward Island')!=-1 || province_name.indexOf('Newfoundland and Labrador')!=-1 || province_name.indexOf('ME')!=-1 || province_name.indexOf('NB')!=-1 || province_name.indexOf('NS')!=-1|| province_name.indexOf('PE')!=-1 || province_name.indexOf('NL')!=-1) {
+						if ((parseFloat(lat_var)>=42.00 & parseFloat(lat_var)<52.00 & parseFloat(lon_var) >+ -69.425 & parseFloat(lon_var) < -52.00) || stn_var != 'Click Marker to Select'){
+        					csv_str = csv_str + province_str + location_str + lat_str + lon_str + elevation_str + por_str;
+        					get_data(id_var,stn_var,lat_var,lon_var,csv_str);
+        				} else {
+        					$('#output_div').empty();
+ 						$('#output_div').append('<h2 style="color:red;">Extreme Precipitation Estimates are not available at points located more than 100 km from an observing station. <br> Please select a different point.</h2>');
+ 						};
+        			} else if (province_name=='undefined' || parseFloat(lat_var)<42.00 || parseFloat(lat_var)>=52.00 || parseFloat(lon_var) < -69.425 || parseFloat(lon_var) > -52.00){ 
+        				$('#output_div').empty();
+ 						$('#output_div').append('<h2 style="color:red;">Extreme Precipitation Estimates are not available at points located more than 100 km from an observing station. <br> Please select a different point.</h2>');
+ 					} else {
+ 						$('#output_div').empty();
+ 						$('#output_div').append('<h2 style="color:red;">Data not available for Provinces outside of Atlantic Canada</h2>');
+ 					};	
+ 					
+ 				  });	
+        					
+				}
+
+function get_data(id_var,stn_var,lat_var,lon_var,csv_str) {
+		
+                let recurrence = ['2-yr','5-yr','10-yr','25-yr','50-yr','100-yr'];
+		if (stn_var != 'Click Marker to Select') {
+			var infile = './stnData/' + id_var + '.json';
+			var infile_CI = './stnData/Cintervals/' + id_var + '.json';
+
+		 	console.log ('BEFORE GET', infile);
+			$.get(infile, function (results) {
+
+			  console.log ('IN GET');
+			  console.log(results);         //[key_lon]['10-yr'][1]
+			  console.log("results");
+		
+			  $.get(infile_CI, function (results_CI) {
+        			generate_IDFtable(results,results_CI['low'],results_CI['high'],csv_str);  //Need to add [key_lon] to these for grid files
+              
+              });
+		
+		   });
+
+		} else {	
+			console.log(lat_var,lon_var,'Coordinates');
+			var lat_str = lat_var.toString()
+			var lat_decimal = lat_str.indexOf('.');
+			if (lat_decimal == -1) {
+				lat_str = lat_str + '.0';
+				lat_decimal = lat_str.indexOf('.');
+			};
+			var lat_start = lat_str.substring(0,lat_decimal+2)
+			var lat_extra = parseFloat(lat_str.substring(0,lat_decimal+2));
+			var lat_end = lat_var-lat_extra;
+			
+			var lon_str = lon_var.toString()
+			var lon_decimal = lon_str.indexOf('.');
+			
+			if (lon_decimal == -1) {
+				lon_str = lon_str + '.0';
+				lon_decimal = lon_str.indexOf('.');
+			};
+				
+			var lon_start = lon_str.substring(0,lon_decimal+2)
+			var lon_extra = parseFloat(lon_str.substring(0,lon_decimal+2));
+			var lon_end = lon_extra-lon_var;   ///order switched for negative lons
+			
+			console.log(lon_str,lon_decimal,lon_start,lon_end);
+			
+			if (lon_end >=0 & lon_end <0.05){
+				var key_lon = lon_start + '25';
+			} else if (lon_end >=0.05){
+				var key_lon = lon_start + '75';
+			};	
+			
+			if (lat_end >=0 & lat_end <0.05){
+				var file_lat = lat_start  + '25';       //var file_lat = lat_start + '25';  Test file is just 46 degrees latitude
+			} else if (lat_end >=0.05){
+				var file_lat = lat_start + '75';       //var file_lat = lat_start + '75';  Test file is just 46 degrees latitude
+			};
+			
+			
+			
+			console.log(file_lat,key_lon);
+			
+			
+			
+			var infile = './gridData/'+ file_lat + '.json';
+			var infile_low = './gridData/CI_low/'+ file_lat + '.json';
+			var infile_high = './gridData/CI_high/'+ file_lat + '.json';
+			
+	
+		
+		 	console.log ('BEFORE GET', infile);
+			
+			$.get(infile, function (results) {
+ 			//table_vals=results[clicked_scenario][clicked_time_per][clicked_return];
+			  //var table_vals = {};
+			  console.log ('IN GET');
+			  console.log(key_lon);
+			  console.log(results[key_lon]);         //[key_lon]['10-yr'][1]
+			  console.log("results");
+		
+			  console.log(recurrence);
+			  
+			  $.get(infile_low, function (results_low) {
+			  
+			     $.get(infile_high, function (results_high) {
+			  
+			         generate_IDFtable(results[key_lon],results_low[key_lon],results_high[key_lon],csv_str);  //Need to add [key_lon] to these for grid files
+		         });
+		      });   
+		    });
+		
+		};
+		}			
+function generate_IDFtable(results,results_low,results_high,csv_str) {
+			
+                let recurrence = ['2-yr','5-yr','10-yr','25-yr','50-yr','100-yr'];
+		var duration_min =['5min','10min','15min','30min'];
+		var duration_hr = ['1hr','2hr','6hr','12hr','24hr'];
+		var intensity2amt_convert = [5./60.,10./60.,0.25,0.5,1.,2.,6.,12.,24.]
+		
+		console.log('low results');
+		console.log(results_low);
+	
+		var table_vals = {};
+		
+ 			console.log(csv_str,'IN TABLE');
+ 			$('#output_div').empty();
+ 					csv_str = csv_str + '<br> Extreme Precipitation Estimates (mm)<br> , , ,Duration (min), , , , ,Duration(hr), , <br>';
+					csv_str = csv_str + 'Recurrence,5min,10min,15min,30min,Recurrence,1hr,2hr,6hr,12hr,24hr<br>';
+ 		
+ 			for (d = 0; d < recurrence.length; d += 1) {
+ 				table_vals[recurrence[d]] = {};
+ 				table_vals[recurrence[d]]['Fitted']=results[recurrence[d]][1];
+ 				table_vals[recurrence[d]]['Stn_vals']=results[recurrence[d]][0];
+ 				
+ 				csv_str = csv_str + recurrence[d]+',';
+ 				for (i = 0; i < duration_min.length; i += 1) {
+ 					table_entry = Math.exp(table_vals[recurrence[d]]['Stn_vals'][i])*intensity2amt_convert[i];
+ 					csv_str = csv_str + table_entry.toFixed(1) + ',';
+ 				};
+ 				
+ 				csv_str = csv_str + recurrence[d]+',';
+ 				
+ 				for (i = 0; i < duration_hr.length; i += 1) {
+ 				 	table_entry = Math.exp(table_vals[recurrence[d]]['Stn_vals'][i+duration_min.length])*intensity2amt_convert[i+duration_min.length];
+ 					csv_str = csv_str + table_entry.toFixed(1) + ',';
+ 				};
+ 				
+				csv_str = csv_str +'<br>';
+
+ 			};
+ 			
+ 			csv_str = csv_str + '<br>Lower Confidence Interval Extreme Precipitation Estimates (mm)<br> , , ,Duration (min), , , , ,Duration(hr), , <br>';
+			csv_str = csv_str + 'Recurrence,5min,10min,15min,30min,Recurrence,1hr,2hr,6hr,12hr,24hr<br>';
+ 		
+ 			for (d = 0; d < recurrence.length; d += 1) {
+ 				console.log(results_low[recurrence[d]]);
+ 				table_vals[recurrence[d]] = {};
+ 				table_vals[recurrence[d]]['Stn_vals']=results_low[recurrence[d]];
+ 				
+ 				csv_str = csv_str + recurrence[d]+',';
+ 				for (i = 0; i < duration_min.length; i += 1) {
+ 					table_entry = Math.exp(table_vals[recurrence[d]]['Stn_vals'][i])*intensity2amt_convert[i];
+ 					csv_str = csv_str + table_entry.toFixed(1) + ',';
+ 				};
+ 				
+ 				csv_str = csv_str + recurrence[d]+',';
+ 				
+ 				for (i = 0; i < duration_hr.length; i += 1) {
+ 				 	table_entry = Math.exp(table_vals[recurrence[d]]['Stn_vals'][i+duration_min.length])*intensity2amt_convert[i+duration_min.length];
+ 					csv_str = csv_str + table_entry.toFixed(1) + ',';
+ 				};
+ 				
+				csv_str = csv_str +'<br>';
+
+ 			};
+ 			
+ 			csv_str = csv_str + '<br>Upper Confidence Interval Extreme Precipitation Estimates (mm)<br> , , ,Duration (min), , , , ,Duration(hr), , <br>';
+			csv_str = csv_str + 'Recurrence,5min,10min,15min,30min,Recurrence,1hr,2hr,6hr,12hr,24hr<br>';
+ 		
+ 			for (d = 0; d < recurrence.length; d += 1) {
+ 				table_vals[recurrence[d]] = {};
+ 				table_vals[recurrence[d]]['Stn_vals']=results_high[recurrence[d]];
+ 				
+ 				csv_str = csv_str + recurrence[d]+',';
+ 				for (i = 0; i < duration_min.length; i += 1) {
+ 					table_entry = Math.exp(table_vals[recurrence[d]]['Stn_vals'][i])*intensity2amt_convert[i];
+ 					csv_str = csv_str + table_entry.toFixed(1) + ',';
+ 				};
+ 				
+ 				csv_str = csv_str + recurrence[d]+',';
+ 				
+ 				for (i = 0; i < duration_hr.length; i += 1) {
+ 				 	table_entry = Math.exp(table_vals[recurrence[d]]['Stn_vals'][i+duration_min.length])*intensity2amt_convert[i+duration_min.length];
+ 					csv_str = csv_str + table_entry.toFixed(1) + ',';
+ 				};
+ 				
+				csv_str = csv_str +'<br>';
+
+ 			};
+ 				
+ 			csv_str = csv_str +'</pre>';
+ 			$('#output_div').append(csv_str);
+	} 	
+</script>
+</body>
+</html>
+

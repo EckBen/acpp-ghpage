@@ -1,0 +1,455 @@
+<!DOCTYPE html><html>
+<head>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+<script type="text/javascript" src="//cdn.rawgit.com/MrRio/jsPDF/master/dist/jspdf.min.js"></script> 
+<script type="text/javascript" src="//cdn.rawgit.com/niklasvh/html2canvas/0.5.0-alpha2/dist/html2canvas.min.js"></script>
+
+<script 
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDULxnPc6zGc6068m7K73rJkM_4EBVs3MQ">
+</script>
+
+<!--<script src="https://maps.googleapis.com/maps/api/elevation/"></script>-->
+
+<script>
+$(document.getElementsByTagName('#output_div')[0]).ready(function() {
+   	// do stuff when div is ready
+   		initializePage();
+ 	});	
+
+</script>
+
+<link rel="stylesheet" href="css/table_styles.css">
+
+</head>
+
+<body>
+
+<h1> Extreme Precipitation Tables </h1>
+<h2> Northeast Regional Climate Center, Cornell University </h2>
+<h4 id="data_source"> </h4>
+
+<div id = "location_info" style = 'border-style: double;  width:30%;'>
+
+<span id="province" style = 'padding-left: 2%;'></span><br>
+<span id="location" style = 'padding-left: 2%;'></span><br>
+<span id="point_lat" style = 'padding-left: 2%;'></span><br>
+<span id="point_lon" style = 'padding-left: 2%;'></span><br>
+<span id="elevation" style = 'padding-left: 2%;'></span><br>
+<span id="period_record" style = 'padding-left: 2%;'></span><br>
+</div>
+
+<div id = "all_tables">
+<div id="output_div" style="width:50%; float:left; padding-top:2%;" >
+</div>
+<div id="output_div_loCI" style="width:50%; padding-top:2%;">
+</div>
+<div id="output_div_hiCI" style="width:50%; padding-top:2%;"> 
+</div>
+
+<div style = "clear: left; width:50%;" align="right"><img src="img/acis.jpg" /></div>
+
+</div>
+
+<div id="editor"></div>
+<!--<button id="cmd">Download Tables</button> -->
+<button id="cmd">Download Tables</button>
+
+<script>
+//$('#cmd').click(function(){
+	var pdf = new jsPDF('p', 'pt', 'letter');
+	var source = $('#all_tables');
+	var options = { background: '#fff', width:800};
+	var specialElementHandlers = {
+	'#bypassme': function(element, renderer) {
+	return true;
+	}
+	};
+	console.log('hi art');
+/*	pdf.fromHTML(
+	$('#testcase').get(0),// HTML string or DOM elem ref.
+
+	0.5, // x coord
+	0.5, // y coord
+	{
+	'width': 7.5, // max width of content on PDF
+	'elementHandlers': specialElementHandlers,
+	 'background': '#fff'
+	});
+ 
+	pdf.save('dataurl');
+})*/
+
+$('#cmd').click(function () {
+
+   pdf.addHTML(source,20,20,options,function()
+   {
+    	pdf.save('extreme_precip_table.pdf');
+   });	
+});
+
+// bnb2 20201202
+//var recurrence = ['2-yr','5-yr','10-yr','25-yr','50-yr','100-yr'];
+
+function initializePage() {
+					console.log('IN INEACHFEATURE');			
+				    var lat_var = localStorage.getItem('passed_lat_val');
+				    var lon_var = localStorage.getItem('passed_lon_val');
+				    var stn_var = localStorage.getItem('passed_stn');
+				    var option1_var = localStorage.getItem('passed_option1');
+				    var option2_var = localStorage.getItem('passed_option2');
+				    var option3_var = localStorage.getItem('passed_option3');
+				    var option4_var = localStorage.getItem('passed_option4');
+				    var id_var = localStorage.getItem('passed_stn_id');
+  				    var rec_leng_var = localStorage.getItem('passed_rec_leng');
+  				    var rec_per_var = localStorage.getItem('passed_rec_per');
+  				    var stn_elev = localStorage.getItem('passed_elev');
+
+					if (stn_var == "Click Marker to Select") {
+						document.querySelector('#data_source').innerHTML = 'Data represent point estimates calculated from annual maximum series.';
+						var elevator = new google.maps.ElevationService;
+							locations = [];
+							locations.push(new google.maps.LatLng(parseFloat(lat_var), parseFloat(lon_var)));
+					
+							elevator.getElevationForLocations({'locations': locations},function(results, status) {
+					 			document.querySelector('#elevation').innerHTML = 'Elevation:    '.bold() + results[0]['elevation'].toFixed(0) + ' m';
+								 });
+					} else {
+						document.querySelector('#data_source').innerHTML = 'Data represent station values calculated from annual maximum series.'
+						document.querySelector('#elevation').innerHTML = 'Elevation:    '.bold() + stn_elev + ' m';	
+						document.querySelector('#location').innerHTML = 'Location:    '.bold() + stn_var;
+						
+						if (parseFloat(rec_leng_var)>=30){
+							document.querySelector('#period_record').innerHTML = 'Period of Record:    '.bold() + rec_leng_var + ' years ' + rec_per_var;
+						} else {
+								document.querySelector('#period_record').innerHTML = 'Period of Record:    '.bold() + rec_leng_var + ' years ' + rec_per_var + '<br>   CAUTION: SHORT STATION RECORD'.fontcolor("red");
+						};		
+					};
+						
+					//document.querySelector('#smoothing').innerHTML = 'Smoothing: ' + option1_var ;
+					
+					var latlng = {lat: parseFloat(lat_var), lng: parseFloat(lon_var)};
+					var geocoder = new google.maps.Geocoder;
+					
+					
+					console.log(parseFloat(lat_var));
+					geocoder.geocode({'location': latlng}, function(results, status) {
+						var array_length = results.length;
+						if (array_length>2){
+							var address = (results[parseFloat(array_length-4)].formatted_address).split(',');
+							console.log(address,'hello 1',address[1])
+						}else{
+							console.log(results[0]);
+							console.log(results[1]);
+						};
+							
+						console.log(status);
+						console.log(address,'address');
+					
+						if (address){
+							if (address[1] == ' Canada') {	
+								document.querySelector('#province').innerHTML = 'Province: '.bold() + address[address.length-2] ;
+							}else{
+								document.querySelector('#province').innerHTML = 'State: '.bold() + address[address.length-2] ;
+							};	
+							var province_name = address[address.length-2];
+						} else {
+							var province_name = "undefined";
+						};	
+						
+						
+						if (stn_var == "Click Marker to Select" & province_name !="undefined") {
+							if (array_length==2){
+								document.querySelector('#location').innerHTML = 'Location: Unresolved location in ' + address[0] + address[1];
+								console.log('equal 2');
+								console.log(address)
+							} else if (array_length>2){
+								console.log('greater 2');
+								console.log(results[1],'now address')
+								document.querySelector('#location').innerHTML = 'Location:  '.bold() + results[1].formatted_address;
+							} else {
+								document.querySelector('#location').innerHTML = 'Location: Unresolved';
+							};
+						};		
+					
+					if (parseFloat(lat_var)>=0) {
+						document.querySelector('#point_lat').innerHTML = 'Latitude:   '.bold() + parseFloat(lat_var).toFixed(2) + ' N';
+					} else{
+						document.querySelector('#point_lat').innerHTML = 'Latitude:   '.bold() + parseFloat(lat_var).toFixed(2) + ' S';
+					};	
+					
+					if (parseFloat(lon_var)>=0) {
+						document.querySelector('#point_lon').innerHTML = 'Longitude:  '.bold() + parseFloat(lon_var).toFixed(2) + ' E';
+					}else{
+						document.querySelector('#point_lon').innerHTML = 'Longitude:  '.bold() + Math.abs(parseFloat(lon_var).toFixed(2)) + ' W';
+					};	
+						
+					if (province_name.indexOf('Maine')!=-1 || province_name.indexOf('New Brunswick')!=-1 || province_name.indexOf('Nova Scotia')!=-1|| province_name.indexOf('Prince Edward Island')!=-1 || province_name.indexOf('Newfoundland and Labrador')!=-1 || province_name.indexOf('ME')!=-1 || province_name.indexOf('NB')!=-1 || province_name.indexOf('NS')!=-1|| province_name.indexOf('PE')!=-1 || province_name.indexOf('NL')!=-1) {
+						if ((parseFloat(lat_var)>=42.00 & parseFloat(lat_var)<52.00 & parseFloat(lon_var) >+ -69.425 & parseFloat(lon_var) < -52.00) || stn_var != 'Click Marker to Select'){
+        					get_data(id_var,stn_var,lat_var,lon_var);
+        				} else {
+        					$('#output_div').empty();
+        					console.log('if one');
+ 							$('#output_div').append('<h2 style="color:red;">Extreme Precipitation Estimates are not available at points located more than 100 km from an observing station. <br> Please select a different point.</h2>');
+ 						};
+        			} else if (province_name=='undefined' || parseFloat(lat_var)<42.00 || parseFloat(lat_var)>=52.00 || parseFloat(lon_var) < -69.425 || parseFloat(lon_var) > -52.00){ 
+        				$('#output_div').empty();
+ 						$('#output_div').append('<h2 style="color:red;">Extreme Precipitation Estimates are not available at points located more than 100 km from an observing station. <br> Please select a different point.</h2>');
+ 						console.log('if two');
+ 					} else {
+ 						$('#output_div').empty();
+ 						$('#output_div').append('<h2 style="color:red;">Data not available for Provinces outside of Atlantic Canada</h2>');
+ 						console.log('if three');
+ 						console.log(province_name,lat_var,lon_var,address);
+ 					};	
+ 					
+ 				  });	
+        					
+				}
+
+
+function get_data(id_var,stn_var,lat_var,lon_var) {
+		
+		// bnb2 20201202
+		let recurrence = ['2-yr','5-yr','10-yr','25-yr','50-yr','100-yr'];
+		if (stn_var != 'Click Marker to Select') {
+			var infile = './stnData/' + id_var + '.json';
+			var infile_CI = './stnData/Cintervals/' + id_var + '.json';
+			
+
+		 	console.log ('BEFORE GET', infile);
+			$.get(infile, function (results) {
+ 			//table_vals=results[clicked_scenario][clicked_time_per][clicked_return];
+			  //var table_vals = {};
+			  console.log ('IN GET');
+			  console.log(results);         //[key_lon]['10-yr'][1]
+			  console.log("results");
+		
+			//  $.get(infile_low, function (results_low) {
+		
+			  console.log(recurrence);
+			  console.log(results[recurrence[0]][1]);
+			  console.log(results[recurrence[0]]);
+			  
+			  $.get(infile_CI, function (results_CI) {
+
+			//  	$.get(infile_high, function (results_high) {
+			 // if (results[recurrence[0]][1]>=0) {
+        	     generate_IDFtable(results,results_CI['low'],results_CI['high']);  //Need to add [key_lon] to these for grid files
+        	//	} else { 
+        	//		$('#output_div').empty();
+ 			//		$('#output_div').append('<h2 style="color:red;">Extreme Precipitation Estimates are not available at points located more than 100 km from an observing station. <br> Please select a different point.</h2>');
+ 			//	};	
+			  
+		//	  });
+		//	});
+			});
+		  });
+
+		} else {	
+			console.log(lat_var,lon_var,'Coordinates');
+			var lat_str = lat_var.toString()
+			var lat_decimal = lat_str.indexOf('.');
+			if (lat_decimal == -1) {
+				lat_str = lat_str + '.0';
+				lat_decimal = lat_str.indexOf('.');
+			};
+			var lat_start = lat_str.substring(0,lat_decimal+2)
+			var lat_extra = parseFloat(lat_str.substring(0,lat_decimal+2));
+			var lat_end = lat_var-lat_extra;
+			
+			var lon_str = lon_var.toString()
+			var lon_decimal = lon_str.indexOf('.');
+			
+			if (lon_decimal == -1) {
+				lon_str = lon_str + '.0';
+				lon_decimal = lon_str.indexOf('.');
+			};
+				
+			var lon_start = lon_str.substring(0,lon_decimal+2)
+			var lon_extra = parseFloat(lon_str.substring(0,lon_decimal+2));
+			var lon_end = lon_extra-lon_var;   ///order switched for negative lons
+			
+			console.log(lon_str,lon_decimal,lon_start,lon_end);
+			
+			if (lon_end >=0 & lon_end <0.05){
+				var key_lon = lon_start + '25';
+			} else if (lon_end >=0.05){
+				var key_lon = lon_start + '75';
+			};	
+			
+			if (lat_end >=0 & lat_end <0.05){
+				var file_lat = lat_start  + '25';       //var file_lat = lat_start + '25';  Test file is just 46 degrees latitude
+			} else if (lat_end >=0.05){
+				var file_lat = lat_start + '75';       //var file_lat = lat_start + '75';  Test file is just 46 degrees latitude
+			};
+			
+			
+			
+			console.log(file_lat,key_lon);
+			
+			
+			
+			var infile = './gridData/'+ file_lat + '.json';
+			var infile_low = './gridData/CI_low/'+ file_lat + '.json';
+			var infile_high = './gridData/CI_high/'+ file_lat + '.json';
+			
+			//var infile = './stnData/CA00705C2G9.json';   //Just a holder for now
+		
+		
+		 	console.log ('BEFORE GET', infile);
+			$.get(infile, function (results) {
+ 			//table_vals=results[clicked_scenario][clicked_time_per][clicked_return];
+			  //var table_vals = {};
+			  console.log ('IN GET');
+			  console.log(key_lon);
+			  console.log(results[key_lon]);         //[key_lon]['10-yr'][1]
+			  console.log("results");
+			  console.log(recurrence);
+			  
+			  $.get(infile_low, function (results_low) {
+			  
+			   	console.log ('IN GET LOW');
+			 	 console.log(key_lon);
+			  	console.log(results_low[key_lon]);         //[key_lon]['10-yr'][1]
+			  	console.log("results");
+			
+				$.get(infile_high, function (results_high) {
+			 
+			 console.log ('IN GET HIGH');
+			 	 console.log(key_lon);
+			  	console.log(results_high[key_lon]);         //[key_lon]['10-yr'][1]
+			  	console.log("results");
+			  	
+			      generate_IDFtable(results[key_lon],results_low[key_lon],results_high[key_lon]);  //Need to add [key_lon] to these for grid files
+		
+				});
+			  });
+		});
+		
+		};
+		}			
+function generate_IDFtable(results,results_low,results_high) {
+			
+		// bnb2 20201202
+		let recurrence = ['2-yr','5-yr','10-yr','25-yr','50-yr','100-yr'];
+		var duration_min =['5min','10min','15min','30min'];
+		var duration_hr = ['1hr','2hr','6hr','12hr','24hr'];
+		var intensity2amt_convert = [5./60.,10./60.,0.25,0.5,1.,2.,6.,12.,24.]
+		
+		console.log('HIGH LIMIT');
+		console.log(results_high);
+	
+		var table_vals = {};
+		
+ 	//	$.get(infile, function (results) {
+ 	//		table_vals=results[clicked_scenario][clicked_time_per][clicked_return];
+ 			
+ 			$('#output_div').empty();
+ 			$('#output_div').append('<table class=smry_table id=table1><\/table>');
+ 			$('table.smry_table').append('<caption style = "font-size:200%; text-align:left; padding-bottom:1%;"></caption><thead><\/thead><tbody><\/tbody>');
+ 			$('table.smry_table caption').append('Extreme Precipitation Estimates (mm)');
+			$('table.smry_table thead').append('<tr> <th></th> <th colspan=4, style="padding-right:25px;font-size:120%;">Duration (min) </th> ' +
+				'<th></th> <th colspan = 5, style="font-size:120%;"> Duration (hr) </th></tr>');
+			$('table.smry_table thead').append('<tr style="font-size:80%;"> <th> Recurrence</th> <th>5min</th> <th>10min</th> ' +
+				'<th>15min</th> <th>30min</th> <th>Recurrence</th><th>1hr</th> <th>2hr</th>' +
+				' <th>6hr</th> <th>12hr</th> <th>24hr</th> </tr>');
+ 		
+ 			for (d = 0; d < recurrence.length; d += 1) {
+ 				table_vals[recurrence[d]] = {};
+ 				table_vals[recurrence[d]]['Fitted']=results[recurrence[d]][1];
+ 				table_vals[recurrence[d]]['Stn_vals']=results[recurrence[d]][0];
+ 				
+ 				tbody = '<th>' + recurrence[d] + '</th>' 
+ 				for (i = 0; i < duration_min.length; i += 1) {
+ 				//	table_entry = Math.exp(table_vals[IDF_lines[i]][0]*Math.log(durations[d])+table_vals[IDF_lines[i]][1]);
+ 					table_entry = Math.exp(table_vals[recurrence[d]]['Stn_vals'][i])*intensity2amt_convert[i];
+ 					tbody = tbody + '<td>' + table_entry.toFixed(1) + '</td>'
+ 				};
+ 				
+ 				tbody = tbody + '<td>' + recurrence[d] + '</td>'
+ 				
+ 				for (i = 0; i < duration_hr.length; i += 1) {
+ 				//	table_entry = Math.exp(table_vals[IDF_lines[i]][0]*Math.log(durations[d])+table_vals[IDF_lines[i]][1]);
+ 					table_entry = Math.exp(table_vals[recurrence[d]]['Stn_vals'][i+duration_min.length])*intensity2amt_convert[i+duration_min.length];
+ 					tbody = tbody + '<td>' + table_entry.toFixed(1) + '</td>'
+ 				};
+ 				
+ 				$('table.smry_table:last tbody').append('<tr>' + tbody + '<\/tr>');
+ 			};	
+ 			
+ 			$('#output_div_loCI').empty();
+ 			$('#output_div_loCI').append('<table class=smry_table id=table2><\/table>');
+ 			$('#table2').append('<caption style = "font-size:185%; text-align:left; padding-top:10%; padding-bottom:1%;"></caption><thead><\/thead><tbody><\/tbody>');
+ 			$('#table2 caption').append('Lower Confidence Interval Extreme Precipitation Estimates (mm)');
+			$('#table2 thead').append('<tr> <th></th> <th colspan=4, style="padding-right:25px;font-size:120%;">Duration (min) </th> ' +
+				'<th></th> <th colspan = 5, style="font-size:120%;"> Duration (hr) </th></tr>');
+			$('#table2 thead').append('<tr style="font-size:80%;"> <th> Recurrence</th> <th>5min</th> <th>10min</th> ' +
+				'<th>15min</th> <th>30min</th> <th>Recurrence</th><th>1hr</th> <th>2hr</th>' +
+				' <th>6hr</th> <th>12hr</th> <th>24hr</th> </tr>');
+ 		
+ 
+ 			for (d = 0; d < recurrence.length; d += 1) {
+ 				table_vals[recurrence[d]] = {};
+ 				//table_vals[recurrence[d]]['Fitted']=results_low[recurrence[d]][1];
+ 				table_vals[recurrence[d]]['Stn_vals']=results_low[recurrence[d]];
+ 				
+ 				tbody = '<th>' + recurrence[d] + '</th>' 
+ 				for (i = 0; i < duration_min.length; i += 1) {
+ 				//	table_entry = Math.exp(table_vals[IDF_lines[i]][0]*Math.log(durations[d])+table_vals[IDF_lines[i]][1]);
+ 					table_entry = Math.exp(table_vals[recurrence[d]]['Stn_vals'][i])*intensity2amt_convert[i];
+ 					tbody = tbody + '<td>' + table_entry.toFixed(1) + '</td>'
+ 				};
+ 				
+ 				tbody = tbody + '<td>' + recurrence[d] + '</td>'
+ 				
+ 				for (i = 0; i < duration_hr.length; i += 1) {
+ 				//	table_entry = Math.exp(table_vals[IDF_lines[i]][0]*Math.log(durations[d])+table_vals[IDF_lines[i]][1]);
+ 					table_entry = Math.exp(table_vals[recurrence[d]]['Stn_vals'][i+duration_min.length])*intensity2amt_convert[i+duration_min.length];
+ 					tbody = tbody + '<td>' + table_entry.toFixed(1) + '</td>'
+ 				};
+ 				
+ 				$('#table2:last tbody').append('<tr>' + tbody + '<\/tr>');
+ 			};		
+ 			
+ 			
+ 		$('#output_div_hiCI').empty();
+ 			$('#output_div_hiCI').append('<table class=smry_table id=table3><\/table>');
+ 			$('#table3').append('<caption style = "font-size:185%; text-align:left; padding-top:1%; padding-bottom:1%;"></caption><thead><\/thead><tbody><\/tbody>');
+ 			$('#table3 caption').append('Upper Confidence Interval Extreme Precipitation Estimates (mm)');
+			$('#table3 thead').append('<tr> <th></th> <th colspan=4, style="padding-right:25px;font-size:120%;">Duration (min) </th> ' +
+				'<th></th> <th colspan = 5, style="font-size:120%;"> Duration (hr) </th></tr>');
+			$('#table3 thead').append('<tr style="font-size:80%;"> <th> Recurrence</th> <th>5min</th> <th>10min</th> ' +
+				'<th>15min</th> <th>30min</th> <th>Recurrence</th><th>1hr</th> <th>2hr</th>' +
+				' <th>6hr</th> <th>12hr</th> <th>24hr</th> </tr>');
+ 		
+ 
+ 			for (d = 0; d < recurrence.length; d += 1) {
+ 				table_vals[recurrence[d]] = {};
+ 				//table_vals[recurrence[d]]['Fitted']=results_low[recurrence[d]][1];
+ 				table_vals[recurrence[d]]['Stn_vals']=results_high[recurrence[d]];
+ 				
+ 				tbody = '<th>' + recurrence[d] + '</th>' 
+ 				for (i = 0; i < duration_min.length; i += 1) {
+ 				//	table_entry = Math.exp(table_vals[IDF_lines[i]][0]*Math.log(durations[d])+table_vals[IDF_lines[i]][1]);
+ 					table_entry = Math.exp(table_vals[recurrence[d]]['Stn_vals'][i])*intensity2amt_convert[i];
+ 					tbody = tbody + '<td>' + table_entry.toFixed(1) + '</td>'
+ 				};
+ 				
+ 				tbody = tbody + '<td>' + recurrence[d] + '</td>'
+ 				
+ 				for (i = 0; i < duration_hr.length; i += 1) {
+ 				//	table_entry = Math.exp(table_vals[IDF_lines[i]][0]*Math.log(durations[d])+table_vals[IDF_lines[i]][1]);
+ 					table_entry = Math.exp(table_vals[recurrence[d]]['Stn_vals'][i+duration_min.length])*intensity2amt_convert[i+duration_min.length];
+ 					tbody = tbody + '<td>' + table_entry.toFixed(1) + '</td>'
+ 				};
+ 				
+ 				$('#table3:last tbody').append('<tr>' + tbody + '<\/tr>');
+ 			};			
+	} 	
+</script>
+</body>
+</html>
+

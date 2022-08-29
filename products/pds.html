@@ -1,0 +1,107 @@
+<div id="map_title">Select Location<img src="img/question_eeeeee.png" class="help" alt="Click the Question Mark for additional help and information." id="help_location"/> <span>Double-click the map to place a marker, or enter address or latitude/longitude.</span></div>
+
+<div id="map"></div>
+
+<div id="show_stns">
+<div class="box_title">
+&nbsp;Select Stations<img src="img/question_ffffcc.png" class="help" alt="Click the Question Mark for additional help and information." id="help_location_address"/>
+</div>
+<div class="box_text">
+<form action="#" >
+Select Specific Stations&nbsp<input type="checkbox" name="stnCheck" id="stnCheck" onclick="markStns(this)"/>&nbsp;
+</form>
+</div>
+</div>
+
+<div id="location_address">
+<div class="box_title">
+&nbsp;Locate by Address<img src="img/question_ffffcc.png" class="help" alt="Click the Question Mark for additional help and information." id="help_location_address"/>
+</div>
+<div class="box_text">
+<form name="locator_address" action="#" onsubmit="submitAddress(); return false;">
+<input type="text" name="address" id="address" size="16"/>&nbsp;
+<input type="submit" value="&rarr;"/>
+</form>
+</div>
+</div>
+
+<div id="location_latlon">
+<div class="box_title">
+&nbsp;Locate by Lat/Lon<img src="img/question_ffffcc.png" class="help" alt="Click the Question Mark for additional help and information." id="help_location_latlon"/>
+</div>
+<div class="box_text">
+<form name="locator_latlon" action="#" onsubmit="submitLatlon(); return false;">
+<input type="text" name="latitude" id="latitude" size="4"/>&deg;N&nbsp;
+<input type="text" name="longitude" id="longitude" size="4"/>&deg;W&nbsp;
+<input type="submit" value="&rarr;"/>
+</form>
+</div>
+</div>
+
+<div id="selected_stnname">
+<div class="box_title">
+&nbsp;Selected Station
+</div>
+<div class="box_text">
+<div id="stn_content"></div>
+</div>
+</div>
+
+
+<div id="location_county">
+<div class="box_title">
+&nbsp;Locate by State/County<img src="img/question_ffffcc.png" class="help" alt="Click the Question Mark for additional help and information." id="help_location_county"/>
+</div>
+<div class="box_text">
+<form name="locator_county" action="#" onsubmit="submitCounty(); return false;">
+<span id="states_and_counties">&nbsp;</span>
+</form>
+</div>
+</div>
+
+<div id="options_title">Select Options<img src="img/question_eeeeee.png" class="help" alt="Click the Question Mark for additional help and information." id="help_options"/></div>
+<div class="options_box">
+
+<div id="option1_box" class="option_2-1">
+<div class="box_title">Duration<img src="img/question_ffffcc.png" class="help" alt="Click the Question Mark for additional help and information." id="help_option_duration"/></div>
+<div class="box_text">
+<select id="option1" name="option1">
+<option value="1hr">1hr</option>
+<option value="2hr">2hr</option>
+<option value="3hr">3hr</option>
+<option value="6hr">6hr</option>
+<option value="12hr">12hr</option>
+<option value="24hr">24hr</option>
+<option value="48hr">48hr</option>
+<option value="" disabled="disabled"></option>
+<option value="1day" selected="selected">1day</option>
+<option value="2day">2day</option>
+<option value="4day">4day</option>
+<option value="7day">7day</option>
+<option value="10day">10day</option>
+</select>
+</div>
+</div>
+
+<div id="option2_box" class="option_2-2">
+<div class="box_title">Delivery<img src="img/question_ffffcc.png" class="help" alt="Click the Question Mark for additional help and information." id="help_option_delivery"/></div>
+<div class="box_text">
+<select id="delivery" name="delivery">
+<option value="popup">Popup</option>
+<option value="download">Download</option>
+</select>
+</div>
+</div>
+
+<input type="hidden" id="option2" name="option2" value="X"/>
+<input type="hidden" id="option3" name="option3" value="X"/>
+<input type="hidden" id="option4" name="option4" value="X"/>
+
+</div>
+
+<div id="submit">
+<span>
+<input id="submit_button" onclick="dataSubmit();" type="submit" value="Submit"/>
+<img src="img/question_eeeeee.png" class="help" alt="Click the Question Mark for additional help and information." id="help_submit"/>
+</span>
+</div>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+
+<html xmlns="//www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<script>
+$(document).ready(function() {
+       console.log('triggered close')
+
+       $('#closebutton').click(function () {
+                      console.log('triggered close2');
+                        
+                      $('#info_blurb').hide();
+       });
+});
+
+</script>
+<head>
+
+<link rel="stylesheet" href="css/help.css" media="all"/>
+
+<body>
+
+<div id="help_titlebar">
+<div id="help_title"><h3>Select Product
+<input type="button" id='closebutton' value="Close" style="float:right; margin:0 20px 0 0;"></h3>
+</div>
+</div>
+
+
+
+<div id="help_text">
+<p>The left side menu on every page within the Data & Products page allows you to select your desired product or output format.  Each product can be custmized for a specific location.  Most information about the available products and outputs can be found at the respective help pages.</p>
+
+<!--<h2>See also:</h2>
+<ul>
+<li><a href="?page=product_html">Extreme Precipitation Tables - HTML</a></li>
+
+<li><a href="?page=product_text">Extreme Precipitation Tables - Text/CSV</a></li>
+<li><a href="?page=product_pdsstn">Partial Duration Series - by Station</a></li>
+<li><a href="?page=product_idf">Intensity Frequency Duration Graphs</a></li>
+<li><a href="?page=product_pdf">Precipitation Frequency Duration Graphs</a></li>
+<li><a href="?page=product_gis">GIS Data Files</a></li>
+<li><a href="?page=product_maps">Regional/State Maps</a></li>
+</ul>
+
+<div id="help_footer">
+   <a target="_blank" href="help/index.html"><img src="help/img/icon_book.gif"/><br/><p>Complete Users Manual</p></a>
+</div>-->
+
+</div>
+
+</body>
+</html>

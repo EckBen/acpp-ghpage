@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+<script>
+$(document).ready(function() {
+       console.log('triggered close')
+
+       $('#closebutton').click(function () {
+                      console.log('triggered close2');
+                        
+                      $('#info_blurb').hide();
+       });
+});
+
+</script>
+
+<link rel="stylesheet" href="css/help.css" media="all"/>
+
+</head>
+
+<body>
+
+<div id="help_titlebar">
+<div id="help_title"> 
+<h3>Select Specific Stations <input type="button" id='closebutton' value="Close" style="float:right; margin:0 20px 0 0;"></h3>
+</div>
+</div>
+
+
+<div id="help_text">
+<p>Checking the Select Specific Stations box changes the map selection interface.  Red dots on the map, show the location of the hourly precipitation stations used in this and the EC IDF analysis.</p>  
+<h3>Specific Station Selection Interface</h3>
+<img src="help/img/Station_select.png" style="width:200px;"/>
+
+<p>From this interface, the other location selection options (including double-clicking on the map) are disabled. However, clicking on a station dot selects that specific station.  The name of the selected station will appear 
+in the Selected Station box on the interface.  Once a station has been selected in this fashion, clicking the submit button will generate the desired extreme rainfall product using observed station data rather than values from the 
+interpolated grid.</p>
+
+<p>Selecting a different location, either another station or a point from the grid, requires the user to uncheck Select Specific Stations box.  The original interface's functionality will be restored. If data from a different station is 
+desired, the Select Specific Stations box must be re-checked.</p>  
+
+<!--
+<h2>See also:</h2>
+<ul>
+<li><a href="?page=location">Select Location</a></li>
+<li><a href="?page=location_latlon">Locate by Lat/Lon</a></li>
+<li><a href="?page=location_county">Locate by State/County</a></li>
+<li><a target="_blank" href="http://maps.google.com/">Google Maps</a></li>
+</ul>
+
+<div id="help_footer">
+   <a target="_blank" href="help/index.html"><img src="help/img/icon_book.gif"/><br/><p>Complete Users Manual</p></a>
+</div> -->
+
+</div>
+</body>
+</html>

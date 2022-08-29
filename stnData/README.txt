@@ -1,0 +1,1 @@
+The values in these files are the natural log of intensity mm/hr.  To convert to rainfall amounts you need to exponentiate and then multiply by duration.   Durations are 5 minute 10 min 15 min 30 min 1 hr 2hr 6hr 12 hr and 24 hr.

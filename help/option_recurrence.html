@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+
+<html xmlns="//www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<script>
+$(document).ready(function() {
+       console.log('triggered close')
+
+       $('#closebutton').click(function () {
+                      console.log('triggered close2');
+                        
+                      $('#info_blurb').hide();
+       });
+});
+
+</script>
+
+
+
+<link rel="stylesheet" href="css/help.css" media="all"/>
+
+</head>
+<body>
+
+<div id="help_titlebar">
+<div id="help_title">
+<h3>Recurrence <input type="button" id='closebutton' value="Close" style="float:right; margin:0 20px 0 0;"></h3>
+</div>
+</div>
+
+<div id="help_text">
+
+<p>This option allows the user to select the Recurrence (Year) or probability of occurrence.  The respective probabilities for each recurrence are listed in parentheses.  See the Technical Documentation for more details on these definitions.</p>
+
+<h2>Options:</h2>
+<ul>
+<li>2yr (50%)</li>
+<li>5yr (20%)</li>
+<li>10yr (10%)</li>
+<li>25yr (4%)</li>
+<li>50yr (2%)</li>
+<li>100yr (1%)</li>
+</ul>
+
+<!--<h2>Products:</h2>
+<ul>
+<li><a href="?page=product_dist">Distribution Curves - Graphical</a></li>
+<li><a href="?page=product_disttext">Distribution Curves - Text/TBL</a></li>
+<li><a href="?page=product_idf">Intensity Frequency Duration Graphs</a></li>
+<li><a href="?page=product_pdf">Precipitation Frequency Duration Graphs</a></li>
+<li><a href="?page=product_gis">GIS Data Files</a></li>
+<li><a href="?page=product_maps">Regional/State Maps</a></li>
+
+<h2>See also:</h2>
+<ul>
+<li><a href="?page=options">Select Options</a></li>
+</ul> -->
+
+</div>
+</body>
+</html>

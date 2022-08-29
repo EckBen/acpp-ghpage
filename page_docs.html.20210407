@@ -1,0 +1,88 @@
+<html>
+<head>
+<script language="javascript" type="text/javascript" src="js/jquery-1.3.2.js"></script>
+
+<link rel="stylesheet" href="css/docs.css" media="all"/>
+<style type="text/css">
+div#category{ 
+width:359px; 
+*width:361px;
+border-right:1px solid #ffffbb; 
+background:#ffffbb; 
+z-index:1; 
+}
+</style>
+
+<body style="margin:0; padding:0;">
+
+<div id="category_header">Categories</div>
+<div id="file_header">Files</div>
+
+
+<div id="category1" class="category" data-region="fileContainer1"> 
+	<span class="category_title"><a href="#" >Technical Documents</a></span></div>
+	
+	<div id = "fileContainer1" class="fileList">
+		<div id = file1 class = "file">
+			<a class = "file_title" href="./docs/Technical_Paper" target="_blank">Technical Manual</a><br>
+			<p class = "file_subtitle"> Detailed methodological information</p>
+		</div>
+		<div id = file2 class = "file">
+			<a class = "file_title" href="https://gts-ee.webex.com/gts-ee/ldr.php?RCID=9fe44259f83fc0e0c89e1613a3f1efce" target="_blank">Informational Video</a><br>
+			<p class = "file_subtitle"> Video describing website features and use</p>
+		</div>
+	
+		<div id = file3 class = "file">
+			<a class = "file_title" href="./docs/CLI-1-89(IDF).pdf" target="_blank">IDF Values for Canadian Locations</a><br>
+			<p class = "file_subtitle"> Environment and Climate Change Canada CLI-1-89</span></p>
+		</div>
+		
+		<div id = file4 class = "file">
+			<a class = "file_title" href="http://climate.weather.gc.ca/prods_servs/engineering_e.html" target="_blank">ECCC Engineering Datasets</a><br>
+			<p class = "file_subtitle"> IDF data files</span></p>
+		</div>
+	</div>
+</div>
+
+<div id="category2" class="category" data-region="fileContainer2" > 
+	<span class="category_title"><a href="#">Related Publications</a></span></div>
+	<div id = "fileContainer2" class="fileList">
+		<div id = file1 class = "file">
+			<a class = "file_title" href="./docs/newfoundland_labrador_idf_curve_2015.pdf" target="_blank">Newfoundland and Labrador IDF </a><br>
+			<p class = "file_subtitle"> Updated historical and projected future IDF curves</p>
+		</div>
+	</div>
+</div>
+
+<div id="category3" class="category" data-region="fileContainer3" > 
+	<span class="category_title"><a href="#">Related Websites</a></span></div>
+	<div id = "fileContainer3" class="fileList">
+		<div id = file1 class = "file">
+			<a class = "file_title" href="http://www.idf-cc-uwo.ca" target="_blank">IDF Climate Change Tool </a><br>
+			<p class = "file_subtitle"> Tool for computing IDF curves under climate change</p>
+		</div>
+	</div>
+</div>
+
+<script>
+
+
+	$('#category1').css({'background-color':'#ffffbb','color':'#fff', 'width':'360','border-right-style': 'none'});
+    $('.category').click(function() {
+        var region = $(this).attr('data-region');
+        
+        $('.category').css({'background-color':'#ccddff','color':'#000099','width': '300','border': '1px solid #333366'});
+        $(this).css({'background-color':'#ffffbb','color':'#fff','width':'360','border-right-style':'none'});
+        
+        $('.fileList:visible').hide() 
+            $("#" + region).show();
+
+        return false;
+        
+    });
+</script>    
+ 
+
+</body>
+</html>
+

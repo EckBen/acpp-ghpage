@@ -1,0 +1,121 @@
+body { background:#eeeeee; }                                                    
+div#category_header {
+	position: absolute;
+	margin: 5px 0 0 100px;
+	font-family: Tahoma, Arial, sans-serif;
+	font-size: 13pt;
+	font-weight: bold;
+	color: #660000;
+	border: 1px solid #000000;
+	height: 585px;
+	width: 320px;
+	background: #dddddd;
+	text-align: center;
+}
+div.category {
+	position: absolute;
+	width: 300px;
+	height: 46px;
+	border: 1px solid #333366;
+	background: #ccddff;
+}
+div#category1 { margin: 35px 0 0 110px;}
+div#category2 { margin: 105px 0 0 110px; }
+div#category3 { margin: 175px 0 0 110px; }
+div#category4 { margin: 245px 0 0 110px; }
+div#category5 { margin: 315px 0 0 110px; }
+div#category6 { margin: 385px 0 0 110px; }
+div#category7 { margin: 455px 0 0 110px; }
+div#category8 { margin: 525px 0 0 110px; }
+
+div#file_header {
+	position: absolute;
+	margin: 5px 0 0 470px;
+	font-family: Tahoma, Arial, sans-serif;
+	font-size: 13pt;
+	font-weight: bold;
+	color: #660000;
+	border: 1px solid #000000;
+	height: 585px;
+	width: 320px;
+	background: #ffffbb;
+	text-align: center;
+}
+div.file {
+	position: absolute;
+	width: 300px;
+	height: 46px;
+	border: 1px solid #666666;
+	background: #eeeeee;
+}
+div#file1 { margin: 35px 0 0 480px; }
+div#file2 { margin: 91px 0 0 480px; }
+div#file3 { margin: 147px 0 0 480px; }
+div#file4 { margin: 203px 0 0 480px; }
+div#file5 { margin: 259px 0 0 480px; }
+div#file6 { margin: 315px 0 0 480px; }
+div#file7 { margin: 371px 0 0 480px; }
+div#file8 { margin: 427px 0 0 480px; }
+div#file9 { margin: 483px 0 0 480px; }
+div#file10 { margin: 539px 0 0 480px; }
+
+img.category_image {
+	position: absolute;
+	margin: 5px 10px 5px 10px;
+	width: 50px;
+	height: 50px;
+	border: 0;
+}
+
+a {
+	text-decoration: none;
+}
+
+#fileContainer2 {
+    display:none;
+}
+#fileContainer3 {
+    display:none;
+}
+
+.category_title {
+	position: absolute; 
+	#margin: 10px 0 0 5px;
+	left: 55px;
+	top: 9px;
+	font-family: Arial, sans-serif;
+	font-size: 14pt;
+	font-weight: bold;
+	color: #000099;
+}
+.file_title {
+	position: absolute;
+	margin: 5px 0 0 10px;
+	font-family: Arial, sans-serif;
+	font-size: 12pt;
+	font-weight: bold;
+	color: #000099;
+}
+.file_subtitle {
+	position: absolute;
+	margin: 10px 0 0 10px;
+	font-family: Arial, sans-serif;
+	font-size: 9pt;
+	font-weight: normal;
+	color: #000000;
+}
+
+div.docs_error {
+	position: absolute;
+	margin: 100px 0 0 225px;
+	padding: 10px 0 10px 0;
+	width: 450px;
+	height: 30px;
+	font-family: Tahoma, Arial, sans-serif;
+	font-weight: bold;
+	font-size: 14pt;
+	color: #aa0000;
+	border: 3px double #aa0000;
+	background: #ffdddd;
+	text-align: center;
+}

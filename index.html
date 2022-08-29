@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Atlantic Canada Extreme Precipitation</title>
+	
+	<meta charset="utf-8" />
+ 
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+ 
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
+	
+	<script src="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
+
+	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	
+	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+	
+	<script src="//code.highcharts.com/highcharts.js"></script>
+	
+	<script src="//code.highcharts.com/highcharts-more.js"></script>
+	
+	<script src="//code.highcharts.com/modules/exporting.js"></script>
+
+	<link rel="stylesheet" href="css/base.css" media="all"/>
+</head>
+
+
+</head>
+<body>
+
+<div id="header"></div>
+
+<div id="menu_about" class="menu"><div><a id="menu_link_about" href="page_about.html" target="main_frame";">About this Project</a></div></div>
+<div id="menu_data" class="menu"><div><a id="menu_link_data" href="page_data.html" target="main_frame";">Data &amp; Products</a></div></div>
+<!--<div id="menu_realtime" class="menu"><div><a id="menu_link_realtime" href="javascript:menuClick('realtime','');">Daily Monitoring</a></div></div> -->
+<div id="menu_docs" class="menu"><div><a id="menu_link_docs" href="page_docs.html" target="main_frame";">Documentation</a></div></div>
+<div id="body">
+<div id="iframe_shadow"></div>
+<iframe id="main_frame" name="main_frame" src="page_about.html"></iframe>
+</div>
+
+<div id="footer">
+<div id="footer_top">
+<a id="changes" href="#"><? echo($version) ?></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; This project is a joint collaboration between:
+</div>
+<div id="footer_left">
+<span> Northeast Regional Climate Center (NRCC) <a target="_blank" href="http://www.nrcc.cornell.edu"></a> </span><br/>
+<a target="_blank" href="http://www.nrcc.cornell.edu"><img src="img/logo-nrcc-square.png"/></a>&nbsp;
+<a target="_blank" href="http://www.rcc-acis.org"><img src="img/acis.jpg"/></a>&nbsp;
+<a target="_blank" href="http://www.cornell.edu"><img src="img/logo_cornell.gif"/></a>&nbsp;
+</div>
+
+<!--
+<div id="footer_center">
+<span style= "position:absolute; left:56px;"> Environment and Climate Change Canada <a target="_blank" href="http://ec.gc.ca/default.asp?lang=En&n=FD9B0E51-1"></a> </span> <br/>
+<a target="_blank" href="http://ec.gc.ca/default.asp?lang=En&n=FD9B0E51-1"><img src="img/ECCC-55E.JPG" width="400px"/></a>&nbsp;
+
+</div>
+-->
+
+<div id="footer_center">
+<a target="_blank" href="http://ec.gc.ca/"><img src="img/ECCC_logo_new.png" style="width:271px;height:45px;padding-left:50px;padding-top:10px"/></a>&nbsp;
+
+</div>
+
+<div id="footer_right">
+<span>Gulf of Maine Association <a target="_blank" href="http://www.gulfofmaine.org"></a> </span><br/>
+<a target="_blank" href="http://www.gulfofmaine.org"><img src="img/GOMC_Logo.jpg" width="150px"/></a>&nbsp;
+
+</div>
+<div id="footer_bottom">
+<span style="position:absolute; left:0; bottom:0;">&copy 2016 Northeast Regional Climate Center</span>
+<span style="position:absolute; right:25px; bottom:0;">Contact: <a href="mailto:precip@cornell.edu">precip@cornell.edu</a></span>
+</div>
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-89289358-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</body>
+</html>

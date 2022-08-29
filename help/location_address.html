@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+
+<html xmlns="//www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+<script>
+$(document).ready(function() {
+       console.log('triggered close')
+
+       $('#closebutton').click(function () {
+                      console.log('triggered close2');
+                        
+                      $('#info_blurb').hide();
+       });
+});
+
+</script>
+
+<link rel="stylesheet" href="css/help.css" media="all"/>
+
+</head>
+
+<body>
+
+<div id="help_titlebar">
+<div id="help_title"> 
+<h3>Locate by Address <input type="button" id='closebutton' value="Close" style="float:right; margin:0 20px 0 0;"></h3>
+</div>
+</div>
+
+
+<div id="help_text">
+<p>This method of location searching is best for users looking for point extreme precipitation data for a specific street address, city/province, postal code.  Enter any address in the “Locate by Address” search box and either press Enter or click the right arrow button to search and select the best matching point.</p>
+
+<h3>Search Interface</h3>
+<img src="help/img/address.png" style="width:200px;"/>
+
+<p>The project makes use of the Google Maps API to geocode any well-formed address to usable latitude/longitude coordinates.  Any combination of street address, city, province, postal code, business name, etc. can be entered in the search box (each element should be separated by a comma).</p>
+
+<h3>Sample address searches:</h3>
+<ul>
+<li>1841 Argyle St, Halifax, NS B3J 3A5, Canada</li>
+<li>1841 Argyle St, Halifax, NS</li>
+<li>1841 Argyle St, NS B3J 3A5</li>
+<li>Halifax, NS</li>
+<li>NS</li>
+<li>Novia Scotia</li>
+<li>B3J 3A5</li>
+</ul>
+
+<p>This system does have its flaws, as an address search may return multiple or incorrect locations.  If you experience trouble finding a given address, it is recommended that use the regular Google Maps web site to locate it.  You can then determine a more specific address, or double-click the Google map on the extreme precipitation web site to select the desired point.</p>
+
+<p>Data are only available for the four Atlantic Canada provinces – New Brunswick, Nova Scotia, Prince Edward Island and Newfoundland (station, but not gridded data from Labrador is also included) and adjacent portions of the state of Maine.  Selecting a point elsewhere will result in an error message or obviously odd results.  In addition, the resolution of the project dataset is approximately 5 km, so a selected point will be matched with the closest grid point to pull the output data.</p>
+
+<!--
+<h2>See also:</h2>
+<ul>
+<li><a href="?page=location">Select Location</a></li>
+<li><a href="?page=location_latlon">Locate by Lat/Lon</a></li>
+<li><a href="?page=location_county">Locate by State/County</a></li>
+<li><a target="_blank" href="http://maps.google.com/">Google Maps</a></li>
+</ul>
+
+<div id="help_footer">
+   <a target="_blank" href="help/index.html"><img src="help/img/icon_book.gif"/><br/><p>Complete Users Manual</p></a>
+</div>
+-->
+
+</div>
+</body>
+</html>

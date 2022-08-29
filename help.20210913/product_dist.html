@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+
+<link rel="stylesheet" href="css/help.css" media="all"/>
+
+<body>
+
+<div id="help_titlebar">
+<div id="help_title"><h3>Distribution Curves - Graphical</h3></div>
+</div>
+
+<div id="help_text">
+
+
+<p>The output from the Distribution Curves product is a special graphic used by NRCS hydraulic engineers for time of concentration and other streamflow calculations.  These graphics are comparable to the Type II, IIA, III, etc. distribution curves.  (These type curves can be added to the output via the Compare to field.) This project, however, is able to dynamically calculate these curves for any point in the Northeast US, rather than taking broad national averages of precipitation distributions.</p>
+
+<p>The precipitation distribution curves are calculated using the same algorithm as the NRCS WinTR-20 software package (with minor rounding differences due to difficulties in the original WinTR-20 programming language).  This methodology assumes the maximum rainfall intensity (the amount of the 5min) storm to occur at exactly the midpoint of a 24-hour period – the 12hr mark.  The curve is then successively constructed outward in both directions.</p>
+
+<p>This product creates a PNG image of the curve.  The x-axis represents duration (in hours), while the unitless y-axis essentially represents the cumulative percent of rain that has fallen into a watershed. In addition, values are displayed in a table below the graphic, at a resolution of 1/10-hour (six minutes).  Smoothing is highly recommended for this product to round out corners from the graph, producing more realistic and reliable results.</p>
+
+<h3>Sample output:</h3>
+<a target="_blank" href="help/img/dist.png"><img src="help/img/dist.png"/></a>
+
+<p>For more details about how these curves are constructed and potential uses, view the WinTR-20 software documentation.</p>
+
+<h2>Options:</h2>
+<ul>
+<li><a href="?page=option_recurrence">Recurrence</a></li>
+<li><a href="?page=option_compare">Compare to</a></li>
+<li><a href="?page=option_smoothing">Smoothing</a></li>
+</ul>
+
+<h2>See also:</h2>
+<ul>
+<li><a href="?page=product_disttext">Distribution Curves - Text/TBL</a></li>
+<li><a target="_blank" href="http://www.precip.net/wintr20/">WinTR-20 Documentation</a></li>
+</ul>
+
+<div id="help_footer">
+   <a target="_blank" href="help/index.html"><img src="help/img/icon_book.gif"/><br/><p>Complete Users Manual</p></a>
+</div>
+
+</div>
+
+</body>
+</html>
