@@ -1,231 +1,230 @@
-<!DOCTYPE html><html>
+<!DOCTYPE html>
+<html>
+
 <head>
 
-<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 
-<script 
-    src="//maps.googleapis.com/maps/api/js?key=AIzaSyDULxnPc6zGc6068m7K73rJkM_4EBVs3MQ">
-</script>
+	<script src="//maps.googleapis.com/maps/api/js?key=AIzaSyDULxnPc6zGc6068m7K73rJkM_4EBVs3MQ">
+	</script>
 
-<!--<script src="//maps.googleapis.com/maps/api/elevation/"></script>-->
+	<script>
+		$(document.getElementsByTagName('#output_div_min')[0]).ready(function () {
+			// do stuff when div is ready
+			initializePage();
+		});
 
-<script>
-$(document.getElementsByTagName('#output_div_min')[0]).ready(function() {
-   	// do stuff when div is ready
-   		initializePage();
- 	});	
+	</script>
 
-</script>
-
-<link rel="stylesheet" href="css/table_styles.css">
+	<link rel="stylesheet" href="css/table_styles.css">
 
 </head>
 
 <body>
 
-<h1> Annual Maximum Series Precipitation Table </h1>
-<h2> Northeast Regional Climate Center Cornell University </h2>
-<h4> All precipitation amounts are displayed in mm. </h4>
+	<h1> Annual Maximum Series Precipitation Table </h1>
+	<h2> Northeast Regional Climate Center Cornell University </h2>
+	<h4> All precipitation amounts are displayed in mm. </h4>
 
-<div id = "location_info" style = 'border-style: double;  width:40%;'>
+	<div id="location_info" style='border-style: double;  width:40%;'>
 
-<span id="province"></span><br>
-<span id="location"></span><br>
-<span id="point_lat"></span><br>
-<span id="point_lon"></span><br>
-<span id="elevation"></span><br>
-<span id="period_record" ></span><br>
-</div>
+		<span id="province"></span><br>
+		<span id="location"></span><br>
+		<span id="point_lat"></span><br>
+		<span id="point_lon"></span><br>
+		<span id="elevation"></span><br>
+		<span id="period_record"></span><br>
+	</div>
 
-<div id="output_div_min" style="width:65%;  padding-top:2%;" >
-</div>
-<div id="output_div_hr" style="width:65%; padding-top:1px;" >
-</div>
+	<div id="output_div_min" style="width:65%;  padding-top:2%;">
+	</div>
+	<div id="output_div_hr" style="width:65%; padding-top:1px;">
+	</div>
 
-<div style = "width:45%;" align="right"><img src="img/acis.jpg" /></div>
+	<div style="width:45%;" align="right"><img src="img/acis.jpg" /></div>
 
-<script>
-
-
-function initializePage() {
-					console.log('IN INEACHFEATURE');			
-				    var lat_var = localStorage.getItem('passed_lat_val');
-				    var lon_var = localStorage.getItem('passed_lon_val');
-				    var stn_var = localStorage.getItem('passed_stn');
-				    var option1_var = localStorage.getItem('passed_option1');
-				    var option2_var = localStorage.getItem('passed_option2');
-				    var option3_var = localStorage.getItem('passed_option3');
-				    var option4_var = localStorage.getItem('passed_option4');
-				    var id_var = localStorage.getItem('passed_stn_id');
-  				    var rec_leng_var = localStorage.getItem('passed_rec_leng');
-  				    var rec_per_var = localStorage.getItem('passed_rec_per');
-					var stn_elev = localStorage.getItem('passed_elev');
-					
-						
-					//document.querySelector('#smoothing').innerHTML = 'Smoothing: ' + option1_var ;
-					
-					var latlng = {lat: parseFloat(lat_var), lng: parseFloat(lon_var)};
-					var geocoder = new google.maps.Geocoder;
-					
-					console.log(parseFloat(lat_var));
-					geocoder.geocode({'location': latlng}, function(results, status) {
-						var array_length = results.length;
-						
-						if (array_length>2){
-							var address = (results[parseFloat(array_length)-2].formatted_address).split(',');
-							console.log(address[1])
-						}else{
-							console.log(results[0]);
-							console.log(results[1]);
-						};
-							
-						console.log(status);
-					
-					
-						if (address[1] == ' Canada') {	
-							document.querySelector('#province').innerHTML = 'Province: '.bold() + address[0] ;
-						}else{
-							document.querySelector('#province').innerHTML = 'State: '.bold() + address[0] ;
-						};	
-						
-
-					});
-					
-					if (parseFloat(lat_var)>=0) {
-						document.querySelector('#point_lat').innerHTML = 'Latitude: '.bold() + parseFloat(lat_var).toFixed(2) + ' N';
-					} else{
-						document.querySelector('#point_lat').innerHTML = 'Latitude: '.bold() + parseFloat(lat_var).toFixed(2) + ' S';
-					};	
-					
-					if (parseFloat(lon_var)>=0) {
-						document.querySelector('#point_lon').innerHTML = 'Longitude: '.bold() + parseFloat(lon_var).toFixed(2) + ' E';
-					}else{
-						document.querySelector('#point_lon').innerHTML = 'Longitude: '.bold() + Math.abs(parseFloat(lon_var).toFixed(2)) + ' W';
-					};	
-					
-					document.querySelector('#elevation').innerHTML = 'Elevation:    '.bold() + stn_elev + ' m';	
-					document.querySelector('#location').innerHTML = 'Location:    '.bold() + stn_var;
-						
-					if (parseFloat(rec_leng_var)>=30){
-						document.querySelector('#period_record').innerHTML = 'Period of Record:    '.bold() + rec_leng_var + ' years ' + rec_per_var;
-					} else {
-						document.querySelector('#period_record').innerHTML = 'Period of Record:    '.bold() + rec_leng_var + ' years ' + rec_per_var + '<br>   CAUTION: SHORT STATION RECORD'.fontcolor("red");
-					};		
-	
-					 
-        			get_data(id_var,stn_var);
-				}
+	<script>
 
 
-function get_data(id_var,stn_var,lat_var,lon_var) {
-		
+		function initializePage() {
+			console.log('IN INEACHFEATURE');
+			var lat_var = localStorage.getItem('passed_lat_val');
+			var lon_var = localStorage.getItem('passed_lon_val');
+			var stn_var = localStorage.getItem('passed_stn');
+			var option1_var = localStorage.getItem('passed_option1');
+			var option2_var = localStorage.getItem('passed_option2');
+			var option3_var = localStorage.getItem('passed_option3');
+			var option4_var = localStorage.getItem('passed_option4');
+			var id_var = localStorage.getItem('passed_stn_id');
+			var rec_leng_var = localStorage.getItem('passed_rec_leng');
+			var rec_per_var = localStorage.getItem('passed_rec_per');
+			var stn_elev = localStorage.getItem('passed_elev');
+
+
+			//document.querySelector('#smoothing').innerHTML = 'Smoothing: ' + option1_var ;
+
+			var latlng = { lat: parseFloat(lat_var), lng: parseFloat(lon_var) };
+			var geocoder = new google.maps.Geocoder;
+
+			console.log(parseFloat(lat_var));
+			geocoder.geocode({ 'location': latlng }, function (results, status) {
+				var array_length = results.length;
+
+				if (array_length > 2) {
+					var address = (results[parseFloat(array_length) - 2].formatted_address).split(',');
+					console.log(address[1])
+				} else {
+					console.log(results[0]);
+					console.log(results[1]);
+				};
+
+				console.log(status);
+
+
+				if (address[1] == ' Canada') {
+					document.querySelector('#province').innerHTML = 'Province: '.bold() + address[0];
+				} else {
+					document.querySelector('#province').innerHTML = 'State: '.bold() + address[0];
+				};
+
+
+			});
+
+			if (parseFloat(lat_var) >= 0) {
+				document.querySelector('#point_lat').innerHTML = 'Latitude: '.bold() + parseFloat(lat_var).toFixed(2) + ' N';
+			} else {
+				document.querySelector('#point_lat').innerHTML = 'Latitude: '.bold() + parseFloat(lat_var).toFixed(2) + ' S';
+			};
+
+			if (parseFloat(lon_var) >= 0) {
+				document.querySelector('#point_lon').innerHTML = 'Longitude: '.bold() + parseFloat(lon_var).toFixed(2) + ' E';
+			} else {
+				document.querySelector('#point_lon').innerHTML = 'Longitude: '.bold() + Math.abs(parseFloat(lon_var).toFixed(2)) + ' W';
+			};
+
+			document.querySelector('#elevation').innerHTML = 'Elevation:    '.bold() + stn_elev + ' m';
+			document.querySelector('#location').innerHTML = 'Location:    '.bold() + stn_var;
+
+			if (parseFloat(rec_leng_var) >= 30) {
+				document.querySelector('#period_record').innerHTML = 'Period of Record:    '.bold() + rec_leng_var + ' years ' + rec_per_var;
+			} else {
+				document.querySelector('#period_record').innerHTML = 'Period of Record:    '.bold() + rec_leng_var + ' years ' + rec_per_var + '<br>   CAUTION: SHORT STATION RECORD'.fontcolor("red");
+			};
+
+
+			get_data(id_var, stn_var);
+		}
+
+
+		function get_data(id_var, stn_var, lat_var, lon_var) {
+
 			var infile = './stnAMS/' + id_var + '.json';
 
-		 	console.log ('BEFORE GET', infile);
+			console.log('BEFORE GET', infile);
 			$.get(infile, function (results) {
- 			
-			  console.log ('IN GET');
-			  console.log(results);         //[key_lon]['10-yr'][1]
-			  console.log("results");
-		
-			if (id_var.substring(0,2)=="CA"){
-			  	generate_AMStable_CA(results); 
-			} else {                             
-				//Need to add [key_lon] to these for grid files	
-				generate_AMStable_USA(results);
-			}	 
+
+				console.log('IN GET');
+				console.log(results);         //[key_lon]['10-yr'][1]
+				console.log("results");
+
+				if (id_var.substring(0, 2) == "CA") {
+					generate_AMStable_CA(results);
+				} else {
+					//Need to add [key_lon] to these for grid files	
+					generate_AMStable_USA(results);
+				}
 			});
 		}
-					
-function generate_AMStable_CA(results) {
-			
-		
-		var duration =['5-min','10-min','15-min','30-min','1-hr','2-hr','6-hr','12-hr','24-hr'];
-		
-		var table_vals = {};
-		
-	
- 			$('#output_div_min').empty();
- 			$('#output_div_min').append('<table class=pfd_table id=table_AMSmin><\/table>');
- 			$('#table_AMSmin').append('<caption style = "font-size:150%; text-align:left; padding-bottom:2%;"></caption><thead><\/thead><tbody><\/tbody>');
- 			$('#table_AMSmin caption').append('Annual Maximum Series Precipitation Amounts');
-			
+
+		function generate_AMStable_CA(results) {
+
+
+			var duration = ['5-min', '10-min', '15-min', '30-min', '1-hr', '2-hr', '6-hr', '12-hr', '24-hr'];
+
+			var table_vals = {};
+
+
+			$('#output_div_min').empty();
+			$('#output_div_min').append('<table class=pfd_table id=table_AMSmin><\/table>');
+			$('#table_AMSmin').append('<caption style = "font-size:150%; text-align:left; padding-bottom:2%;"></caption><thead><\/thead><tbody><\/tbody>');
+			$('#table_AMSmin caption').append('Annual Maximum Series Precipitation Amounts');
+
 			$('#table_AMSmin thead').append('<tr> <th colspan=2"> 5-min Duration</th> ' +
 				'<th colspan=2"> 10-min Duration</th> <th colspan=2"> 15-min Duration</th> ' +
 				'<th colspan=2"> 30-min Duration</th></tr>');
 			$('#table_AMSmin thead').append('<tr> <th>Amount</th> <th>Year</th><th>Amount</th> <th>Year</th> ' +
 				'<th>Amount</th> <th>Year</th> <th>Amount</th> <th>Year</th> </tr>');
- 		
- 			for (i= 0; i < results['24-hr'][0].length; i +=1) {
- 				tbody = '';
- 				for (d = 0; d < 4; d += 1) {	
- 					tbody= tbody + '<td>' + results[duration[d]][0][i] + '</td>' + '<td>' + results[duration[d]][1][i] + '</td>';
- 				};
- 					
- 				$('#table_AMSmin:last tbody').append('<tr>' + tbody + '<\/tr>');
- 			};
- 			
- 			
- 			table_vals = {};
- 			console.log('GOING to HOURLY');
- 			$('#output_div_hr').empty();
- 			$('#output_div_hr').append('<table class=pfd_table id=table_AMShr><\/table>');
- 			
- 			$('#table_AMShr').append('<thead><\/thead><tbody><\/tbody>');
- 			$('#table_AMShr thead').append('<tr> <th colspan=2"> 1-hr Duration</th> ' +
+
+			for (i = 0; i < results['24-hr'][0].length; i += 1) {
+				tbody = '';
+				for (d = 0; d < 4; d += 1) {
+					tbody = tbody + '<td>' + results[duration[d]][0][i] + '</td>' + '<td>' + results[duration[d]][1][i] + '</td>';
+				};
+
+				$('#table_AMSmin:last tbody').append('<tr>' + tbody + '<\/tr>');
+			};
+
+
+			table_vals = {};
+			console.log('GOING to HOURLY');
+			$('#output_div_hr').empty();
+			$('#output_div_hr').append('<table class=pfd_table id=table_AMShr><\/table>');
+
+			$('#table_AMShr').append('<thead><\/thead><tbody><\/tbody>');
+			$('#table_AMShr thead').append('<tr> <th colspan=2"> 1-hr Duration</th> ' +
 				'<th colspan=2"> 2-hr Duration</th> <th colspan=2"> 6-hr Duration</th> ' +
 				'<th colspan=2"> 12-hr Duration</th> <th colspan=2"> 24-hr Duration</th></tr>');
-			
-			console.log('between heads');	
+
+			console.log('between heads');
 			$('#table_AMShr thead').append('<tr> <th>Amount</th> <th>Year</th><th>Amount</th> <th>Year</th> ' +
 				'<th>Amount</th> <th>Year</th> <th>Amount</th> <th>Year</th> <th>Amount</th> <th>Year</th> </tr>');
- 		
- 			for (i= 0; i < results['24-hr'][0].length; i +=1) {
- 				tbody = '';
- 				for (d = 4; d < duration.length; d += 1) {	
- 					tbody= tbody + '<td>' + results[duration[d]][0][i] + '</td>' + '<td>' + results[duration[d]][1][i] + '</td>';
- 				};
- 					
- 				$('#table_AMShr:last tbody').append('<tr>' + tbody + '<\/tr>');
- 			};
+
+			for (i = 0; i < results['24-hr'][0].length; i += 1) {
+				tbody = '';
+				for (d = 4; d < duration.length; d += 1) {
+					tbody = tbody + '<td>' + results[duration[d]][0][i] + '</td>' + '<td>' + results[duration[d]][1][i] + '</td>';
+				};
+
+				$('#table_AMShr:last tbody').append('<tr>' + tbody + '<\/tr>');
+			};
 
 
-	} 
-	
-	function generate_AMStable_USA(results) {
-			
-		
-		var duration =['1-hr','2-hr','6-hr','12-hr','24-hr'];
-		
-		var table_vals = {};
-		
- 			console.log('GOING to HOURLY');
- 			$('#output_div_hr').empty();
- 			$('#output_div_hr').append('<table class=pfd_table id=table_AMShr><\/table>');
- 			
- 			$('#table_AMShr').append('<thead><\/thead><tbody><\/tbody>');
- 			$('#table_AMSmin caption').append('Annual Maximum Series Precipitation Amounts');
- 			$('#table_AMShr thead').append('<tr> <th colspan=2"> 1-hr Duration</th> ' +
+		}
+
+		function generate_AMStable_USA(results) {
+
+
+			var duration = ['1-hr', '2-hr', '6-hr', '12-hr', '24-hr'];
+
+			var table_vals = {};
+
+			console.log('GOING to HOURLY');
+			$('#output_div_hr').empty();
+			$('#output_div_hr').append('<table class=pfd_table id=table_AMShr><\/table>');
+
+			$('#table_AMShr').append('<thead><\/thead><tbody><\/tbody>');
+			$('#table_AMSmin caption').append('Annual Maximum Series Precipitation Amounts');
+			$('#table_AMShr thead').append('<tr> <th colspan=2"> 1-hr Duration</th> ' +
 				'<th colspan=2"> 2-hr Duration</th> <th colspan=2"> 6-hr Duration</th> ' +
 				'<th colspan=2"> 12-hr Duration</th> <th colspan=2"> 24-hr Duration</th></tr>');
-			
-			console.log('between heads');	
+
+			console.log('between heads');
 			$('#table_AMShr thead').append('<tr> <th>Amount</th> <th>Year</th><th>Amount</th> <th>Year</th> ' +
 				'<th>Amount</th> <th>Year</th> <th>Amount</th> <th>Year</th> <th>Amount</th> <th>Year</th> </tr>');
- 		
- 			for (i= 0; i < results['24-hr'][0].length; i +=1) {
- 				tbody = '';
- 				for (d = 0; d < duration.length; d += 1) {	
- 					tbody= tbody + '<td>' + results[duration[d]][0][i] + '</td>' + '<td>' + results[duration[d]][1][i] + '</td>';
- 				};
- 					
- 				$('#table_AMShr:last tbody').append('<tr>' + tbody + '<\/tr>');
- 			};
+
+			for (i = 0; i < results['24-hr'][0].length; i += 1) {
+				tbody = '';
+				for (d = 0; d < duration.length; d += 1) {
+					tbody = tbody + '<td>' + results[duration[d]][0][i] + '</td>' + '<td>' + results[duration[d]][1][i] + '</td>';
+				};
+
+				$('#table_AMShr:last tbody').append('<tr>' + tbody + '<\/tr>');
+			};
 
 
-	} 	
-</script>
+		} 	
+	</script>
 </body>
-</html>
 
+</html>

@@ -1,101 +1,67 @@
-<div id="map_title">Select Location<img src="img/question_eeeeee.png" class="help_master" alt="Click the Question Mark for additional help and information." id="location"/> <span>Click on a station marker to select station</span></div>
+<div id="map_title">Select Location<img src="img/question_eeeeee.png" class="help_master"
+    alt="Click the Question Mark for additional help and information." id="location" /> <span>Click on a station marker
+    to select station</span></div>
 
 <div id="map"></div>
 
-<!--<div id="show_stns">
-<div class="box_title">
-&nbsp;Select Stations<img src="img/question_ffffcc.png" class="help_master" alt="Click the Question Mark for additional help and information." id="location_stnSelect"/>
-</div>
-<div class="box_text">
-<form action="#" >
-Select Specific Stations&nbsp<input type="checkbox" name="stnCheck" id="stnCheck" onclick="markStns(this,'ams')"/>&nbsp;
-</form>
-</div>
-</div>-->
-
 <div id="location_address" style="display: none;">
-<div class="box_title">
-&nbsp;Locate by Address<img src="img/question_ffffcc.png" class="help_master" alt="Click the Question Mark for additional help and information." id="location_address"/>
-</div>
-<div class="box_text">
-<form name="locator_address" action="#" onsubmit="submitAddress(); return false;">
-<input type="text" name="address" id="address" size="16"/>&nbsp;
-<input type="submit" value="&rarr;"/>
-</form>
-</div>
+  <div class="box_title">
+    &nbsp;Locate by Address<img src="img/question_ffffcc.png" class="help_master"
+      alt="Click the Question Mark for additional help and information." id="location_address" />
+  </div>
+  <div class="box_text">
+    <form name="locator_address" action="#" onsubmit="submitAddress(); return false;">
+      <input type="text" name="address" id="address" size="16" />&nbsp;
+      <input type="submit" value="&rarr;" />
+    </form>
+  </div>
 </div>
 
 <div id="location_latlon" style="display: none;">
-<div class="box_title">
-&nbsp;Locate by Lat/Lon<img src="img/question_ffffcc.png" class="help_master" alt="Click the Question Mark for additional help and information." id="location_latlon"/>
-</div>
-<div class="box_text">
-<form name="locator_latlon" action="#" onsubmit="submitLatlon(); return false;">
-<input type="text" name="latitude" id="latitude" size="4"/>&deg;N&nbsp;
-<input type="text" name="longitude" id="longitude" size="4"/>&deg;W&nbsp;
-<input type="submit" value="&rarr;"/>
-</form>
-</div>
+  <div class="box_title">
+    &nbsp;Locate by Lat/Lon<img src="img/question_ffffcc.png" class="help_master"
+      alt="Click the Question Mark for additional help and information." id="location_latlon" />
+  </div>
+  <div class="box_text">
+    <form name="locator_latlon" action="#" onsubmit="submitLatlon(); return false;">
+      <input type="text" name="latitude" id="latitude" size="4" />&deg;N&nbsp;
+      <input type="text" name="longitude" id="longitude" size="4" />&deg;W&nbsp;
+      <input type="submit" value="&rarr;" />
+    </form>
+  </div>
 </div>
 
 <div id="selected_stnname">
-<div class="box_title">
-&nbsp;Selected Station
+  <div class="box_title">
+    &nbsp;Selected Station
+  </div>
+  <div class="box_text">
+    <div id="stn_content"></div>
+  </div>
 </div>
-<div class="box_text">
-<div id="stn_content"></div>
-</div>
-</div>
-
-
 
 <div id="location_county" style="display:block;">
-<div class="box_title">
-&nbsp;Zoom to Province/County<img src="img/question_ffffcc.png" class="help_master" alt="Click the Question Mark for additional help and information." id="location_county"/>
+  <div class="box_title">
+    &nbsp;Zoom to Province/County<img src="img/question_ffffcc.png" class="help_master"
+      alt="Click the Question Mark for additional help and information." id="location_county" />
+  </div>
+  <div class="box_text">
+    <form name="locator_county" action="#" onsubmit="submitCounty(); return false;">
+      <span id="states_and_counties">&nbsp;</span>
+    </form>
+  </div>
 </div>
-<div class="box_text">
-<form name="locator_county" action="#" onsubmit="submitCounty(); return false;">
-<span id="states_and_counties">&nbsp;</span>
-</form>
-</div>
-</div>
 
-<!-- <div id="options_title">Select Options<img src="img/question_eeeeee.png" class="help" alt="Click the Question Mark for additional help and information." id="help_options"/></div>
-<div class="options_box">
+<input type="hidden" id="option1" name="option1" value="X" />
+<input type="hidden" id="option2" name="option2" value="X" />
 
-<div id="option1_box" class="option_2-1">
-<div class="box_title">Smoothing<img src="img/question_ffffcc.png" class="help" alt="Click the Question Mark for additional help and information." id="help_option_smoothing"/></div>
-<div class="box_text">
-<select id="option1" name="option1">
-<option value="yes">Yes</option>
-<option value="no">No</option>
-</select>
-</div>
-</div> 
-
-
-<div id="option2_box" class="option_2-2">
-<div class="box_title">Delivery<img src="img/question_ffffcc.png" class="help" alt="Click the Question Mark for additional help and information." id="help_option_delivery"/></div>
-<div class="box_text">
-<select id="delivery" name="delivery">
-<option value="popup">Popup</option>
-<option value="download">Download</option>
-</select>
-</div>
-</div>
-</div>  -->
-
-<input type="hidden" id="option1" name="option1" value="X"/>
-<input type="hidden" id="option2" name="option2" value="X"/>
-
-<input type="hidden" id="option3" name="option3" value="X"/>
-<input type="hidden" id="option4" name="option4" value="X"/>
-
-
+<input type="hidden" id="option3" name="option3" value="X" />
+<input type="hidden" id="option4" name="option4" value="X" />
 
 <div id="submit">
-<span>
-<input id="submit_button" onclick="dataSubmit();" type="submit" value="Submit"/>
-<img src="img/question_eeeeee.png" class="help_master" alt="Click the Question Mark for additional help and information." id="submit"/>
-</span>
+  <span>
+    <input id="submit_button" onclick="dataSubmit();" type="submit" value="Submit" />
+    <img src="img/question_eeeeee.png" class="help_master"
+      alt="Click the Question Mark for additional help and information." id="submit" />
+  </span>
 </div>
