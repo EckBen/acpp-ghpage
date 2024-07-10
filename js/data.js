@@ -100,7 +100,7 @@ function dataSubmit() {
     var new_page = "../acpp-ghpage/page_gis.html";
   }
 
-  console.log(new_page);
+  console.log(new_page, 'x');
   OpenProdWin(new_page, option1, option2, option3);
 
   // console.log('BEFORE POST')
