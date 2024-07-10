@@ -1,4 +1,7 @@
-body { background:#eeeeee; }                                                    
+body {
+	background: #eeeeee;
+}
+
 div#category_header {
 	position: absolute;
 	margin: 5px 0 0 100px;
@@ -12,6 +15,7 @@ div#category_header {
 	background: #dddddd;
 	text-align: center;
 }
+
 div.category {
 	position: absolute;
 	width: 300px;
@@ -19,14 +23,38 @@ div.category {
 	border: 1px solid #333366;
 	background: #ccddff;
 }
-div#category1 { margin: 35px 0 0 110px;}
-div#category2 { margin: 105px 0 0 110px; }
-div#category3 { margin: 175px 0 0 110px; }
-div#category4 { margin: 245px 0 0 110px; }
-div#category5 { margin: 315px 0 0 110px; }
-div#category6 { margin: 385px 0 0 110px; }
-div#category7 { margin: 455px 0 0 110px; }
-div#category8 { margin: 525px 0 0 110px; }
+
+div#category1 {
+	margin: 35px 0 0 110px;
+}
+
+div#category2 {
+	margin: 105px 0 0 110px;
+}
+
+div#category3 {
+	margin: 175px 0 0 110px;
+}
+
+div#category4 {
+	margin: 245px 0 0 110px;
+}
+
+div#category5 {
+	margin: 315px 0 0 110px;
+}
+
+div#category6 {
+	margin: 385px 0 0 110px;
+}
+
+div#category7 {
+	margin: 455px 0 0 110px;
+}
+
+div#category8 {
+	margin: 525px 0 0 110px;
+}
 
 div#file_header {
 	position: absolute;
@@ -41,6 +69,7 @@ div#file_header {
 	background: #ffffbb;
 	text-align: center;
 }
+
 div.file {
 	position: absolute;
 	width: 300px;
@@ -48,16 +77,46 @@ div.file {
 	border: 1px solid #666666;
 	background: #eeeeee;
 }
-div#file1 { margin: 35px 0 0 480px; }
-div#file2 { margin: 91px 0 0 480px; }
-div#file3 { margin: 147px 0 0 480px; }
-div#file4 { margin: 203px 0 0 480px; }
-div#file5 { margin: 259px 0 0 480px; }
-div#file6 { margin: 315px 0 0 480px; }
-div#file7 { margin: 371px 0 0 480px; }
-div#file8 { margin: 427px 0 0 480px; }
-div#file9 { margin: 483px 0 0 480px; }
-div#file10 { margin: 539px 0 0 480px; }
+
+div#file1 {
+	margin: 35px 0 0 480px;
+}
+
+div#file2 {
+	margin: 91px 0 0 480px;
+}
+
+div#file3 {
+	margin: 147px 0 0 480px;
+}
+
+div#file4 {
+	margin: 203px 0 0 480px;
+}
+
+div#file5 {
+	margin: 259px 0 0 480px;
+}
+
+div#file6 {
+	margin: 315px 0 0 480px;
+}
+
+div#file7 {
+	margin: 371px 0 0 480px;
+}
+
+div#file8 {
+	margin: 427px 0 0 480px;
+}
+
+div#file9 {
+	margin: 483px 0 0 480px;
+}
+
+div#file10 {
+	margin: 539px 0 0 480px;
+}
 
 img.category_image {
 	position: absolute;
@@ -72,15 +131,15 @@ a {
 }
 
 #fileContainer2 {
-    display:none;
+	display: none;
 }
+
 #fileContainer3 {
-    display:none;
+	display: none;
 }
 
 .category_title {
-	position: absolute; 
-	#margin: 10px 0 0 5px;
+	position: absolute;
 	left: 55px;
 	top: 9px;
 	font-family: Arial, sans-serif;
@@ -88,6 +147,7 @@ a {
 	font-weight: bold;
 	color: #000099;
 }
+
 .file_title {
 	position: absolute;
 	margin: 5px 0 0 10px;
@@ -96,6 +156,7 @@ a {
 	font-weight: bold;
 	color: #000099;
 }
+
 .file_subtitle {
 	position: absolute;
 	margin: 10px 0 0 10px;

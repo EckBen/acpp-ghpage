@@ -9,9 +9,9 @@ ul li {
 	font-size: 10pt;
 	font-family: Arial, sans-serif;
 	margin-top: 5px;
-   }
-   
-	
+}
+
+
 div#box_left {
 	position: absolute;
 	margin: 0 10px auto 10px;
@@ -19,6 +19,7 @@ div#box_left {
 	width: 420px;
 	height: 580px;
 }
+
 div#box_right_top {
 	position: absolute;
 	margin: 0 10px auto 510px;
@@ -30,6 +31,7 @@ div#box_right_top {
 	font-weight: bold;
 	background: #ffcc99;
 }
+
 div#box_right_bottom {
 	position: absolute;
 	margin: 8px 10px auto 460px;
@@ -45,6 +47,7 @@ div#box_right_top div#help_image {
 	width: 50px;
 	padding: 0;
 }
+
 div#box_right_top div#help_image img {
 	position: absolute;
 	margin: 0;
@@ -53,34 +56,40 @@ div#box_right_top div#help_image img {
 	width: 50px;
 	border: 0;
 }
+
 div#box_right_top div#help_title {
 	position: absolute;
 	margin: 5px auto 5px 60px;
 	height: 30px;
 	width: 255px;
 }
+
 div#box_right_top div#help_title a {
 	font-size: 17pt;
 	color: #000099;
 	text-decoration: none;
 }
+
 div#box_right_top div#help_text {
 	position: absolute;
 	margin: 35px auto 5px 60px;
 	height: 20px;
 	width: 255px;
 }
+
 div#box_right_top div#help_text a {
-	font-size: 9pt;	
+	font-size: 9pt;
 	font-style: italic;
 	color: #000000;
 	text-decoration: none;
 }
+
 div#box_right_top div#help_text span {
 	font-size: 11pt;
 }
 
-div#box_left h3, div#box_right_bottom h3 {
+div#box_left h3,
+div#box_right_bottom h3 {
 	background: url('../img/h_bg.png');
 	margin: 0;
 	padding: 3px 0 3px 5px;
@@ -89,7 +98,9 @@ div#box_left h3, div#box_right_bottom h3 {
 	color: #ffffff;
 	letter-spacing: 2px;
 }
-div#box_left p, div#box_right_bottom p {
+
+div#box_left p,
+div#box_right_bottom p {
 	margin: 5px 10px 20px 10px;
 	font-size: 10pt;
 }

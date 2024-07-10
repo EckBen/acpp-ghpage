@@ -1,51 +1,42 @@
 <!DOCTYPE html>
 
 <html xmlns="//www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
 <head>
-<script>
-$(document).ready(function() {
-       console.log('triggered close')
+  <script>
+    $(document).ready(function () {
+      console.log('triggered close')
 
-       $('#closebutton').click(function () {
-                      console.log('triggered close2');
-                        
-                      $('#info_blurb').hide();
-       });
-});
+      $('#closebutton').click(function () {
+        console.log('triggered close2');
 
-</script>
+        $('#info_blurb').hide();
+      });
+    });
 
+  </script>
 
-
-<link rel="stylesheet" href="css/help.css" media="all"/>
+  <link rel="stylesheet" href="css/help.css" media="all" />
 
 </head>
+
 <body>
 
-<div id="help_titlebar">
-<div id="help_title">
-<h3>Select Options <input type="button" id='closebutton' value="Close" style="float:right; margin:0 20px 0 0;"></h3>
-</div>
-</div>
+  <div id="help_titlebar">
+    <div id="help_title">
+      <h3>Select Options <input type="button" id='closebutton' value="Close" style="float:right; margin:0 20px 0 0;">
+      </h3>
+    </div>
+  </div>
 
-<div id="help_text">
+  <div id="help_text">
 
-<p>Each available product has a set of options to customize the output display.  All option dropdown boxes much have a value (either the default or a user-selected) to activate the submit button.</p>
+    <p>Each available product has a set of options to customize the output display. All option dropdown boxes much have
+      a value (either the default or a user-selected) to activate the submit button.</p>
 
-<p>For more information about a specific option, see the respective help page.</p>
+    <p>For more information about a specific option, see the respective help page.</p>
 
-<!--<h2>See also:</h2>
-<ul>
-<li><a href="?page=option_smoothing">Smoothing</a></li>
-<li><a href="?page=option_delivery">Delivery</a></li>
-<li><a href="?page=option_duration">Duration</a></li>
-<li><a href="?page=option_recurrence">Recurrence</a></li>
-<li><a href="?page=option_compare">Compare to</a></li>
-<li><a href="?page=option_durationrange">Duration Range</a></li>
-<li><a href="?page=option_intensityunits">Intensity Units</a></li>
-<li><a href="?page=option_confidence">Confidence Limits</a></li>
-</ul> -->
-
-</div>
+  </div>
 </body>
+
 </html>

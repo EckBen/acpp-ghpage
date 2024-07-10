@@ -2,65 +2,54 @@
 
 <html xmlns="//www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <script>
-$(document).ready(function() {
-       console.log('triggered close')
+   $(document).ready(function () {
+      console.log('triggered close')
 
-       $('#closebutton').click(function () {
-                      console.log('triggered close2');
-                        
-                      $('#info_blurb').hide();
-       });
-});
+      $('#closebutton').click(function () {
+         console.log('triggered close2');
+
+         $('#info_blurb').hide();
+      });
+   });
 
 </script>
+
 <head>
 
-<link rel="stylesheet" href="css/help.css" media="all"/>
+   <link rel="stylesheet" href="css/help.css" media="all" />
 
 <body>
 
-<div id="help_titlebar">
-<div id="help_title"><h3>Regional/Province Maps
-<input type="button" id='closebutton' value="Close" style="float:right; margin:0 20px 0 0;"></h3>
-</div>
-</div>
+   <div id="help_titlebar">
+      <div id="help_title">
+         <h3>Regional/Province Maps
+            <input type="button" id='closebutton' value="Close" style="float:right; margin:0 20px 0 0;">
+         </h3>
+      </div>
+   </div>
 
-<div id="help_text">
+   <div id="help_text">
 
-<p>Graphical displays of the final data for all durations and recurrences are available.  Maps are available at a regional or individual province scale and produced in full color. </p>
+      <p>Graphical displays of the final data for all durations and recurrences are available. Maps are available at a
+         regional or individual province scale and produced in full color. </p>
 
-<h3>Sample output (Region):</h3>
-<a target="_blank" href="Maps/Atlantic_Canada/1-hr/50-yr_smoothed_gridded_recur_pcp.png"><img src="Maps/Atlantic_Canada/1-hr/50-yr_smoothed_gridded_recur_pcp.png"/></a>
+      <h3>Sample output (Region):</h3>
+      <a target="_blank" href="Maps/Atlantic_Canada/1-hr/50-yr_smoothed_gridded_recur_pcp.png"><img
+            src="Maps/Atlantic_Canada/1-hr/50-yr_smoothed_gridded_recur_pcp.png" /></a>
 
+      <h3>Sample output (Province):</h3>
+      <a target="_blank" href="Maps/NB/24-hr/100-yr_smoothed_gridded_recur_pcp.png"><img
+            src="Maps/NB/24-hr/100-yr_smoothed_gridded_recur_pcp.png" /></a>
 
-<h3>Sample output (Province):</h3>
-<a target="_blank" href="Maps/NB/24-hr/100-yr_smoothed_gridded_recur_pcp.png"><img src="Maps/NB/24-hr/100-yr_smoothed_gridded_recur_pcp.png"/></a>
+      <p>You are authorized to use the graphics generated on web sites, in publications, or other similar uses. Please
+         leave the “ACIS” logo intact, and/or give attribution to the Northeast Regional Climate Center, Cornell
+         University.</p>
 
-<p>You are authorized to use the graphics generated on web sites, in publications, or other similar uses.  Please leave the “ACIS” logo intact, and/or give attribution to the Northeast Regional Climate Center, Cornell University.</p>
+      <p>If you are an advanced user with a need to analyze data across the entire Atlantic Canada region (or across
+         entire provinces), the GIS Data Files product may better suit your needs.</p>
 
-<p>If you are an advanced user with a need to analyze data across the entire Atlantic Canada region (or across entire provinces), the GIS Data Files product may better suit your needs.</p>
-
-<!--
-<h2>Options:</h2>
-<ul>
-<li><a href="?page=regionstate">Region/State</a></li>
-<li><a href="?page=option_duration">Duration</a></li>
-<li><a href="?page=option_recurrence">Recurrence</a></li>
-<li><a href="?page=option_display">Display</a></li>
-</ul>
-
-<h2>See also:</h2>
-<ul>
-<li><a href="?page=product_html">Extreme Precipitation Tables - HTML</a></li>
-<li><a href="?page=product_gis">GIS Data Files</a></li>
-</ul>
-
-<div id="help_footer">
-   <a target="_blank" href="help/index.html"><img src="help/img/icon_book.gif"/><br/><p>Complete Users Manual</p></a>
-</div>
--->
-</div>
+   </div>
 
 </body>
-</html>
 
+</html>

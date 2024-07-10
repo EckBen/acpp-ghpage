@@ -1,62 +1,51 @@
 <!DOCTYPE html>
 
 <html xmlns="//www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
 <head>
-<script>
-$(document).ready(function() {
-       console.log('triggered close')
+  <script>
+    $(document).ready(function () {
+      console.log('triggered close')
 
-       $('#closebutton').click(function () {
-                      console.log('triggered close2');
-                        
-                      $('#info_blurb').hide();
-       });
-});
+      $('#closebutton').click(function () {
+        console.log('triggered close2');
 
-</script>
+        $('#info_blurb').hide();
+      });
+    });
 
+  </script>
 
-
-<link rel="stylesheet" href="css/help.css" media="all"/>
+  <link rel="stylesheet" href="css/help.css" media="all" />
 
 </head>
+
 <body>
 
-<div id="help_titlebar">
-<div id="help_title">
-<h3>Duration <input type="button" id='closebutton' value="Close" style="float:right; margin:0 20px 0 0;"></h3>
-</div>
-</div>
+  <div id="help_titlebar">
+    <div id="help_title">
+      <h3>Duration <input type="button" id='closebutton' value="Close" style="float:right; margin:0 20px 0 0;"></h3>
+    </div>
+  </div>
 
-<div id="help_text">
+  <div id="help_text">
 
-<p>This option allows the user to select the duration (time) for the product display.</p>
+    <p>This option allows the user to select the duration (time) for the product display.</p>
 
-<h2>Options:</h2>
-<ul>
-<li>5min</li>
-<li>10min</li>
-<li>15min</li>
-<li>30min</li>
-<li>1hr</li>
-<li>2hr</li>
-<li>6hr</li>
-<li>12hr</li>
-<li>24hr</li>
-</ul>
+    <h2>Options:</h2>
+    <ul>
+      <li>5min</li>
+      <li>10min</li>
+      <li>15min</li>
+      <li>30min</li>
+      <li>1hr</li>
+      <li>2hr</li>
+      <li>6hr</li>
+      <li>12hr</li>
+      <li>24hr</li>
+    </ul>
 
-</div>
+  </div>
 </body>
+
 </html>
-
-<!--<h2>Products:</h2>
-<ul>
-<li><a href="?page=product_pds">Partial Duration Series - by Point</a></li>
-<li><a href="?page=product_pdsstn">Partial Duration Series - by Station</a></li>
-<li><a href="?page=product_gis">GIS Data Files</a></li>
-<li><a href="?page=product_maps">Regional/State Maps</a></li>
-
-<h2>See also:</h2>
-<ul>
-<li><a href="?page=options">Select Options</a></li>
-</ul>-->

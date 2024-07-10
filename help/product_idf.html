@@ -3,60 +3,52 @@
 <html xmlns="//www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 
 <script>
-$(document).ready(function() {
-       console.log('triggered close')
+   $(document).ready(function () {
+      console.log('triggered close')
 
-       $('#closebutton').click(function () {
-                      console.log('triggered close2');
-                        
-                      $('#info_blurb').hide();
-       });
-});
+      $('#closebutton').click(function () {
+         console.log('triggered close2');
+
+         $('#info_blurb').hide();
+      });
+   });
 
 </script>
+
 <head>
 
-<link rel="stylesheet" href="css/help.css" media="all"/>
+   <link rel="stylesheet" href="css/help.css" media="all" />
 
 <body>
 
-<div id="help_titlebar">
-<div id="help_title"><h3>Intensity Frequency Duration Graphs
-<input type="button" id='closebutton' value="Close" style="float:right; margin:0 20px 0 0;"></h3>
-</div>
-</div>
+   <div id="help_titlebar">
+      <div id="help_title">
+         <h3>Intensity Frequency Duration Graphs
+            <input type="button" id='closebutton' value="Close" style="float:right; margin:0 20px 0 0;">
+         </h3>
+      </div>
+   </div>
 
+   <div id="help_text">
 
+      <p>Intensity Frequency Duration (also known as Intensity Duration Frequency or IDF) curves estimate peak rainfall
+         intensity over a range of durations (subhourly, hourly, or daily) for a constant recurrence interval.</p>
 
-<div id="help_text">
+      <p>This product specifically derives intensity (not return period amount) by dividing the return period amount
+         estimate by the number of hours. The output display will show a graph generally with decreasing intensity as
+         duration increases, since the highest intensity extreme precipitation events are usually observed with shorter
+         durations. Given the range of intensities and durations depicted on by each curve, the graphs use logarithmic
+         axes that produce straight-lined IDF curves.</p>
 
-<p>Intensity Frequency Duration (also known as Intensity Duration Frequency or IDF) curves estimate peak rainfall intensity over a range of durations (subhourly, hourly, or daily) for a constant recurrence interval.</p>
+      <p>This product also provides a logarithmic interpolation of intensity for intermediate durations that are not
+         specifically calculated. The non-interpolated values for base durations are shown by symbols on the graph. A
+         table under the graph shows the calculated and estimated values for each duration.</p>
 
-<p>This product specifically derives intensity (not return period amount) by dividing the return period amount estimate by the number of hours. The output display will show a graph generally with decreasing intensity as duration increases, since the highest intensity extreme precipitation events are usually observed with shorter durations. Given the range of intensities and durations depicted on by each curve, the graphs use logarithmic axes that produce straight-lined IDF curves.</p>
+      <h3>Sample output:</h3>
+      <a target="_blank" href="help/img/IDF_sample.png"><img src="help/img/IDF_sample.png" /></a>
 
-<p>This product also provides a logarithmic interpolation of intensity for intermediate durations that are not specifically calculated. The non-interpolated values for base durations are shown by symbols on the graph.  A table under the graph shows the calculated and estimated values for each duration.</p>
-
-<h3>Sample output:</h3>
-<a target="_blank" href="help/img/IDF_sample.png"><img src="help/img/IDF_sample.png"/></a>
-
-
-<!--<h2>Options:</h2>
-<ul>
-<li><a href="?page=option_durationrange">Duration Range</a></li>
-<li><a href="?page=option_intensityunits">Intensity Units</a></li>
-<li><a href="?page=option_recurrence">Recurrence</a></li>
-</ul>
-
-<h2>See also:</h2>
-<ul>
-<li><a href="?page=product_pdf">Precipitation Frequency Duration Graphs</a></li>
-</ul>
-
-<div id="help_footer">
-   <a target="_blank" href="help/index.html"><img src="help/img/icon_book.gif"/><br/><p>Complete Users Manual</p></a>
-</div>-->
-
-</div>
+   </div>
 
 </body>
+
 </html>
