@@ -85,18 +85,25 @@ function dataSubmit() {
   console.log(product);
 
   if (product == "html") {
+    // var new_page = "../page_xprecip_table.html";
     var new_page = "../acpp-ghpage/page_xprecip_table.html";
   } else if (product == "ifd") {
+    // var new_page = "../page_ifd_graph.html";
     var new_page = "../acpp-ghpage/page_ifd_graph.html";
   } else if (product == "text") {
+    // var new_page = "../page_xprecip_csv.html";
     var new_page = "../acpp-ghpage/page_xprecip_csv.html";
   } else if (product == "pfd") {
+    // var new_page = "../page_precipFreq_graph.html";
     var new_page = "../acpp-ghpage/page_precipFreq_graph.html";
   } else if (product == "amsstn") {
+    // var new_page = "../page_amsstn_table.html";
     var new_page = "../acpp-ghpage/page_amsstn_table.html";
   } else if (product == "maps") {
+    // var new_page = "../page_maps.html";
     var new_page = "../acpp-ghpage/page_maps.html";
   } else if (product == "gis") {
+    // var new_page = "../page_gis.html";
     var new_page = "../acpp-ghpage/page_gis.html";
   }
 

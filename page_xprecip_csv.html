@@ -84,7 +84,7 @@
 				var array_length = results.length;
 
 				if (array_length > 2) {
-					var address = (results[parseFloat(array_length) - 4].formatted_address).split(',');
+					var address = (results[parseFloat(array_length) - 2].formatted_address).split(',');
 					console.log(address[1]);
 				} else {
 					console.log(results[0]);
